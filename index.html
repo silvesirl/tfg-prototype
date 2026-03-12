@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>#map { height: 400px; width: 100%; }</style>
+</head>
+<body>
+    <h3>Landmark-api</h3>
+    <div id="map"></div>
+    <p id="result">Result: --</p>
+
+    <script>
+        const map = L.map('map').setView([41.38, 2.17], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+       let ClickMarker;
+
+        map.on('click', async function(e)
+        {
+            const { lat, lng } = e.latlng;
+
+            if (ClickMarker)
+            {
+                map.removeLayer(ClickMarker);
+            }
+
+            ClickMarker = L.marker([lat, lng]).addTo(map)
+                .bindPopup("Calculating...")
+                .openPopup();
+
+            try
+            {
+                const response = await fetch('http://localhost:18080/calculate',
+                {
+                    method: 'POST',
+                    body: JSON.stringify({ lat: lat, lon: lng })
+                });
+
+                const data = await response.json();
+
+                ClickMarker.setPopupContent(`<b>Closest:</b> ${data.name}<br><b>Distance:</b> ${data.distance.toFixed(2)} km`)
+                    .openPopup();
+                    
+                document.getElementById('result').innerText = 
+                    "Closest Landmark: " + data.name + " (" + data.distance.toFixed(2) + " km)";
+
+            
+                L.map('map').setView([data.lat, data.lon], 13);
+                    
+            }
+            catch (error)
+            {
+                console.error("Error connecting to C++ server:", error);
+                ClickMarker.setPopupContent("Server Error! Check C++ terminal.").openPopup();
+            }
+        });
+    </script>
+</body>
+</html>
