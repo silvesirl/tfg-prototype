@@ -1,0 +1,3 @@
+C:/Users/silve/Desktop/tfg/prototype/build/CMakeFiles/geospatial_api.dir
+C:/Users/silve/Desktop/tfg/prototype/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/silve/Desktop/tfg/prototype/build/CMakeFiles/ZERO_CHECK.dir
