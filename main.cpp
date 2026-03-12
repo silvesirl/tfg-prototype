@@ -86,16 +86,6 @@ int main()
         }
     });
 
-    Server.Put("/updatelocation", [](const httplib::Request& Request, httplib::Response& Response)
-    {
-        JsonParser RequestData = JsonParser::parse(Request.body);
-
-
-        std::cout << "Request recibido: Actualizadas coordenadas actuales" << std::endl;
-        
-        Response.set_content("{\"status\": \"success\"}", "application/json");
-    });
-
     std::cout << "Servidor escuchando en http://localhost:18080..." << std::endl;
     Server.listen("0.0.0.0", Port);
     
