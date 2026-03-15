@@ -1,48 +1,63 @@
+let Map;
+let MetricDistance = "Kilometers";
+
 document.addEventListener("DOMContentLoaded", function()
 {
-    const map = L.map('map').setView([41.38, 2.17], 13);
+    Map = L.map('map').setView([41.38, 2.17], 13);
+    const SwitchMetricButton = document.getElementById("SwitchMetric");
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(Map);
 
     let ClickMarker;
 
-    map.on('click', async function(e)
+    SwitchMetricButton.addEventListener("click", async function()
+    {
+        const Response = await fetch('http://localhost:18080/changemetric',
+        {
+            method: 'POST'
+        });
+
+        const Data = await Response.json();
+
+        MetricDistance = Data["metric"];
+    });
+
+    Map.on("click", async function(e)
     {
         const { lat, lng } = e.latlng;
 
         if (ClickMarker)
         {
-            map.removeLayer(ClickMarker);
+            Map.removeLayer(ClickMarker);
         }
 
-        ClickMarker = L.marker([lat, lng]).addTo(map)
-            .bindPopup("Calculating...")
-            .openPopup();
+        ClickMarker = L.marker([lat, lng]).addTo(Map)
+            //.bindPopup("Calculating...")
+            //.openPopup();
 
         try
         {
-            const response = await fetch('http://localhost:18080/calculate',
+            const Response = await fetch('http://localhost:18080/calculate',
             {
                 method: 'POST',
                 body: JSON.stringify({ lat: lat, lon: lng })
             });
 
-            const data = await response.json();
+            const Data = await Response.json();
 
             const ResultsContainer = document.getElementById('results');
             ResultsContainer.innerHTML = '';
 
-            data.forEach(landmark => {
-                const div = document.createElement('div');
-                div.className = 'result-item';
-                div.innerHTML = `
-                    <b>${landmark.name}</b>: ${landmark.distance.toFixed(2)} km
-                    <button onclick="map.flyTo([${landmark.lat}, ${landmark.lon}], 15)">Ir</button>`;
-                ResultsContainer.appendChild(div);
+            Data.forEach(Landmark => {
+                const Div = document.createElement('div');
+                Div.className = 'result-item';
+                Div.innerHTML = `
+                    <b>${Landmark.name}</b>: ${Landmark.distance.toFixed(2)} ${MetricDistance}
+                    <button onclick="Map.flyTo([${Landmark.lat}, ${Landmark.lon}], 15)">Ir</button>`;
+                ResultsContainer.appendChild(Div);
 
-                L.marker([landmark.lat, landmark.lon]).addTo(map)
-                    .bindPopup(`<b>${landmark.name}</b><br>Distancia: ${landmark.distance.toFixed(2)} km`)
-                    .openPopup();
+                L.marker([Landmark.lat, Landmark.lon]).addTo(Map)
+                .bindPopup(`<b>${Landmark.name}</b><br>Distancia: ${Landmark.distance.toFixed(2)}${MetricDistance}`);
             });                 
         }
         catch (error)

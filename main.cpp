@@ -1,52 +1,46 @@
-#include "httplib.h"
 #include <iostream>
-#include "json.hpp"
 #include <cmath>
 #include <numbers>
+
+#include "Utils/Landmark.h"
+#include "Utils/DistanceMetric.h"
+#include "Utils/json.hpp"
+#include "Utils/httplib.h"
+#include "Utils/GlobalConstants.h"
+
+// json reader
 using JsonParser = nlohmann::json;
 
-#ifndef M_PI
-#define M_PI 3.14159265358979323846
-#endif
-
-const double EARTH_RADIUS_KM = 6371.0;
-
-int Port = 18080;
-
-struct Landmark {
-    std::string Name;
-    double Lat;
-    double Lon;
-}; 
+DistanceMetric DistanceMetricChosen = DistanceMetric::KILOMETERS;
 
 Landmark CurrentLocation = {"Your location", 0.0 ,0.0};
 
 // Privisional, waiting for database
 std::vector<Landmark> RegisteredLandmarks = {
-    {"Gran Muralla China", 40.4319, 116.5704},
-    {"Petra", 30.3285, 35.4444},
-    {"Coliseo Romano", 41.8902, 12.4922},
-    {"Chichén Itzá", 20.6843, -88.5678},
-    {"Machu Picchu", -13.1631, -72.5450},
-    {"Taj Mahal", 27.1751, 78.0421},
-    {"Cristo Redentor", -22.9519, -43.2105},
-    {"Sagrada Familia", 41.4036, 2.1744},
-    {"Estatua de la Libertad", 40.6892, -74.0445},
-    {"Torre Eiffel", 48.8584, 2.2945},
-    {"Cataratas del Niágara", 43.0782, -79.0757},
-    {"Monte Kilimanjaro", -3.0674, 37.3556},
-    {"Monte Everest (Himalaya)", 27.9881, 86.9250},
-    {"Falla de San Andrés", 35.1166, -119.6817},
-    {"Tokyo Tower", 35.6586, 139.7454},
-    {"Pirámides de Giza", 29.9792, 31.1342},
-    {"Ayers Rock", -25.3444, 131.0369}
+    {"Gran Muralla China", 40.4319, 116.5704, LandmarkType::MONUMENT},
+    {"Petra", 30.3285, 35.4444, LandmarkType::MONUMENT},
+    {"Coliseo Romano", 41.8902, 12.4922, LandmarkType::MONUMENT},
+    {"Chichén Itzá", 20.6843, -88.5678, LandmarkType::MONUMENT},
+    {"Machu Picchu", -13.1631, -72.5450, LandmarkType::MONUMENT},
+    {"Taj Mahal", 27.1751, 78.0421, LandmarkType::MONUMENT},
+    {"Cristo Redentor", -22.9519, -43.2105, LandmarkType::MONUMENT},
+    {"Sagrada Familia", 41.4036, 2.1744, LandmarkType::MONUMENT},
+    {"Estatua de la Libertad", 40.6892, -74.0445, LandmarkType::MONUMENT},
+    {"Torre Eiffel", 48.8584, 2.2945, LandmarkType::MONUMENT},
+    {"Cataratas del Niágara", 43.0782, -79.0757, LandmarkType::NATURALWONDER},
+    {"Monte Kilimanjaro", -3.0674, 37.3556, LandmarkType::NATURALWONDER},
+    {"Monte Everest", 27.9881, 86.9250, LandmarkType::NATURALWONDER},
+    {"Falla de San Andrés", 35.1166, -119.6817, LandmarkType::NATURALWONDER},
+    {"Tokyo Tower", 35.6586, 139.7454, LandmarkType::MONUMENT},
+    {"Pirámides de Giza", 29.9792, 31.1342,LandmarkType::MONUMENT},
+    {"Ayers Rock", -25.3444, 131.0369, LandmarkType::NATURALWONDER}
 };
 
 double HaversineDistanceCalculation(Landmark aCurrentLandmark, Landmark aMappedLandmark)
 {
     auto ToRadians = [](double degree) -> double
     { 
-        return degree * (M_PI / 180.0); 
+        return degree * (PI / 180.0); 
     };
 
     double DLat = ToRadians(aMappedLandmark.Lat - aCurrentLandmark.Lat);
@@ -58,9 +52,16 @@ double HaversineDistanceCalculation(Landmark aCurrentLandmark, Landmark aMappedL
 
     double AngularDistanceRadians = 2.0 * std::atan2(std::sqrt(ChordLengthSq), std::sqrt(1.0 - ChordLengthSq));
 
-    std::cout << "La distancia entre "<< aMappedLandmark.Name << " y tu localizacion es de " << EARTH_RADIUS_KM * AngularDistanceRadians << " Km" << std::endl;
+    double Distance = EARTH_RADIUS_KM * AngularDistanceRadians;
 
-    return EARTH_RADIUS_KM * AngularDistanceRadians;
+    if(DistanceMetricChosen == DistanceMetric::MILES)
+    {
+        Distance = Distance * MILES_TRANSFORM;
+    }
+
+    std::cout << "La distancia entre "<< aMappedLandmark.Name << " y tu localizacion es de " << Distance << (DistanceMetricChosen == DistanceMetric::KILOMETERS ? " Km" : " Miles") << std::endl;
+
+    return Distance;
 }
 
 int main()
@@ -77,8 +78,31 @@ int main()
         res.status = 200;
     });
 
-    Server.Get("/", [](const httplib::Request&, httplib::Response& Response) {
+    Server.Get("/", [](const httplib::Request&, httplib::Response& Response)
+    {
         Response.set_content("API Geospacial en ejecucion", "text/plain");
+    });
+
+    Server.Post("/changemetric", [](const httplib::Request& Request, httplib::Response& Response)
+    {
+        bool Return;
+
+        if(DistanceMetricChosen == DistanceMetric::KILOMETERS)
+        {
+            DistanceMetricChosen = DistanceMetric::MILES;
+        }
+        else
+        {
+            DistanceMetricChosen = DistanceMetric::KILOMETERS;
+        }
+
+        nlohmann::json JsonResponse;
+
+        JsonResponse["metric"] = (DistanceMetricChosen == DistanceMetric::KILOMETERS) ? "Kilometers" : "Miles";
+
+        std::cout << "Cambiada metrica de distancia a " << JsonResponse["metric"] << std::endl;
+
+        Response.set_content(JsonResponse.dump(), "application/json");
     });
 
     Server.Post("/calculate", [](const httplib::Request& Request, httplib::Response& Response)
@@ -109,7 +133,7 @@ int main()
     });
 
     std::cout << "Servidor escuchando en http://localhost:18080..." << std::endl;
-    Server.listen("0.0.0.0", Port);
+    Server.listen("0.0.0.0", SERVER_PORT);
     
     return 0;
 }
