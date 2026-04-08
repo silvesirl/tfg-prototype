@@ -3,5 +3,6 @@
 enum class DistanceMetric
 {
     KILOMETERS,
-    MILES
+    MILES,
+    FOOT
 };

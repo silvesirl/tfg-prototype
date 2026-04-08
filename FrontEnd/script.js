@@ -4,15 +4,42 @@ let MetricDistance = "Kilometers";
 document.addEventListener("DOMContentLoaded", function()
 {
     Map = L.map('map').setView([41.38, 2.17], 13);
-    const SwitchMetricButton = document.getElementById("SwitchMetric");
+    const SwitchKilometersButton = document.getElementById("ChangeKilometers");
+    const SwitchMilesButton = document.getElementById("ChangeMiles");
+    const SwitchFootButton = document.getElementById("ChangeFoot");
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(Map);
 
     let ClickMarker;
 
-    SwitchMetricButton.addEventListener("click", async function()
+    SwitchKilometersButton.addEventListener("click", async function()
     {
-        const Response = await fetch('http://localhost:18080/changemetric',
+        const Response = await fetch('http://localhost:18080/changekm',
+        {
+            method: 'POST'
+        });
+
+        const Data = await Response.json();
+
+        MetricDistance = Data["metric"];
+    });
+
+    SwitchMilesButton.addEventListener("click", async function()
+    {
+        const Response = await fetch('http://localhost:18080/changemiles',
+        {
+            method: 'POST'
+        });
+
+        const Data = await Response.json();
+
+        MetricDistance = Data["metric"];
+    });
+
+
+    SwitchFootButton.addEventListener("click", async function()
+    {
+        const Response = await fetch('http://localhost:18080/changefoot',
         {
             method: 'POST'
         });

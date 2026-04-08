@@ -15,7 +15,7 @@ DistanceMetric DistanceMetricChosen = DistanceMetric::KILOMETERS;
 
 Landmark CurrentLocation = {"Your location", 0.0 ,0.0};
 
-// Privisional, waiting for database
+// Provisional, waiting for database
 std::vector<Landmark> RegisteredLandmarks = {
     {"Gran Muralla China", 40.4319, 116.5704, LandmarkType::MONUMENT},
     {"Petra", 30.3285, 35.4444, LandmarkType::MONUMENT},
@@ -38,6 +38,8 @@ std::vector<Landmark> RegisteredLandmarks = {
 
 double HaversineDistanceCalculation(Landmark aCurrentLandmark, Landmark aMappedLandmark)
 {
+    std::string UnitMetric;
+
     auto ToRadians = [](double degree) -> double
     { 
         return degree * (PI / 180.0); 
@@ -54,12 +56,24 @@ double HaversineDistanceCalculation(Landmark aCurrentLandmark, Landmark aMappedL
 
     double Distance = EARTH_RADIUS_KM * AngularDistanceRadians;
 
-    if(DistanceMetricChosen == DistanceMetric::MILES)
+    switch(DistanceMetricChosen)
     {
-        Distance = Distance * MILES_TRANSFORM;
+        case DistanceMetric::KILOMETERS:
+            UnitMetric = "Km";
+            break;
+        
+        case DistanceMetric::MILES:
+            Distance = Distance * MILES_TRANSFORM;
+            UnitMetric = "Miles";
+            break;
+
+        case DistanceMetric::FOOT:
+            Distance = Distance * FEET_TRANSFORM;
+            UnitMetric = "Foot";
+            break;
     }
 
-    std::cout << "La distancia entre "<< aMappedLandmark.Name << " y tu localizacion es de " << Distance << (DistanceMetricChosen == DistanceMetric::KILOMETERS ? " Km" : " Miles") << std::endl;
+    std::cout << "La distancia entre "<< aMappedLandmark.Name << " y tu localizacion es de " << Distance << UnitMetric << std::endl;
 
     return Distance;
 }
@@ -83,27 +97,51 @@ int main()
         Response.set_content("API Geospacial en ejecucion", "text/plain");
     });
 
-    Server.Post("/changemetric", [](const httplib::Request& Request, httplib::Response& Response)
+    Server.Post("/changekm", [](const httplib::Request& Request, httplib::Response& Response)
     {
         bool Return;
 
-        if(DistanceMetricChosen == DistanceMetric::KILOMETERS)
-        {
-            DistanceMetricChosen = DistanceMetric::MILES;
-        }
-        else
-        {
-            DistanceMetricChosen = DistanceMetric::KILOMETERS;
-        }
-
         nlohmann::json JsonResponse;
 
-        JsonResponse["metric"] = (DistanceMetricChosen == DistanceMetric::KILOMETERS) ? "Kilometers" : "Miles";
+        JsonResponse["metric"] = "Kilometers";
 
         std::cout << "Cambiada metrica de distancia a " << JsonResponse["metric"] << std::endl;
 
+        DistanceMetricChosen = DistanceMetric::KILOMETERS;
+
         Response.set_content(JsonResponse.dump(), "application/json");
     });
+
+    Server.Post("/changemiles", [](const httplib::Request& Request, httplib::Response& Response)
+    {
+        bool Return;
+
+        nlohmann::json JsonResponse;
+
+        JsonResponse["metric"] = "Miles";
+
+        std::cout << "Cambiada metrica de distancia a " << JsonResponse["metric"] << std::endl;
+
+        DistanceMetricChosen = DistanceMetric::MILES;
+
+        Response.set_content(JsonResponse.dump(), "application/json");
+    });
+
+    Server.Post("/changefoot", [](const httplib::Request& Request, httplib::Response& Response)
+    {
+        bool Return;
+
+        nlohmann::json JsonResponse;
+
+        JsonResponse["metric"] = "Foot";
+
+        std::cout << "Cambiada metrica de distancia a " << JsonResponse["metric"] << std::endl;
+
+        DistanceMetricChosen = DistanceMetric::FOOT;
+
+        Response.set_content(JsonResponse.dump(), "application/json");
+    });
+    ///
 
     Server.Post("/calculate", [](const httplib::Request& Request, httplib::Response& Response)
     {

@@ -1,19 +1,58 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="script.js"></script>
-    <style>#map { height: 600px; width: 100%; }</style>
+    <script src="script.js" defer></script>
 </head>
 <body>
-    <h3>Landmark-api</h3>
-    <div id="map"></div>
+    <h3>Landmark-api <span style="font-weight: 400; font-size: 14px; color: var(--text-muted);">| Dashboard</span></h3>
 
-    <button id="SwitchMetric">Switch Distance Metric</button>
-    
-    <h3>Historial de Búsquedas:</h3>
-    <div id="results">
+    <div class="main-container">
+        <div class="map-wrapper">
+            <div id="map"></div>
+            <button id="CurrentLocationButton">📍 Usar Mi Ubicación Actual</button>
+        </div>
+
+        <div class="history-panel">
+            <h3>Historial</h3>
+            <div id="results">
+                <p style="color: var(--text-muted); font-size: 14px;">Esperando búsquedas...</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="bottom-toolbar">
+        <div class="tool-group">
+            <div class="info-text">Unidad de Distancia</div>
+            <div class="row-items">
+                <button id="ChangeKilometers">Kilómetros</button>
+                <button id="ChangeMiles">Millas</button>
+                <button id="ChangeFoot">Pies</button>
+            </div>
+        </div>
+
+        <div class="tool-group">
+            <div class="info-text">Filtros Geográficos</div>
+            <div class="row-items">
+                <select id="Continente">
+                    <option value="-">-</option>
+                    <option value="Europa">Europa</option>
+                    <option value="Africa">África</option>
+                    <option value="Asia">Asia</option>
+                    <option value="America">América</option>
+                    <option value="Oceania">Oceanía</option>
+                </select>
+
+                <select id="Categoria">
+                     <option value="-">-</option>
+                    <option value="Monumento">🏛️ Monumento</option>
+                    <option value="Natural">🌿 Natural</option>
+                </select>
+            </div>
+        </div>
     </div>
 </body>
 </html>
