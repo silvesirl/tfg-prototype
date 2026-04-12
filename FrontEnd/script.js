@@ -1,79 +1,53 @@
 let Map;
 let MetricDistance = "Kilometers";
+let LastLat = null;
+let LastLon = null;
 
 document.addEventListener("DOMContentLoaded", function()
 {
     Map = L.map('map').setView([41.38, 2.17], 13);
+
     const SwitchKilometersButton = document.getElementById("ChangeKilometers");
     const SwitchMilesButton = document.getElementById("ChangeMiles");
     const SwitchFootButton = document.getElementById("ChangeFoot");
+    const ContinentDropDown = document.getElementById("Continente");
+    const CategoryDropDown = document.getElementById("Categoria");
+    const CurrentLocationButton = document.getElementById("CurrentLocationButton");
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(Map);
-
-    let ClickMarker;
-
-    SwitchKilometersButton.addEventListener("click", async function()
+    function UpdateActiveButton(aActiveButton)
     {
-        const Response = await fetch('http://localhost:18080/changekm',
-        {
-            method: 'POST'
+        [SwitchKilometersButton, SwitchMilesButton, SwitchFootButton].forEach(Button => {
+            Button.classList.remove('active');
         });
 
-        const Data = await Response.json();
+        aActiveButton.classList.add('active');
+    }
 
-        MetricDistance = Data["metric"];
-    });
-
-    SwitchMilesButton.addEventListener("click", async function()
+    async function CalculateDistance(aLat, aLon)
     {
-        const Response = await fetch('http://localhost:18080/changemiles',
-        {
-            method: 'POST'
-        });
-
-        const Data = await Response.json();
-
-        MetricDistance = Data["metric"];
-    });
-
-
-    SwitchFootButton.addEventListener("click", async function()
-    {
-        const Response = await fetch('http://localhost:18080/changefoot',
-        {
-            method: 'POST'
-        });
-
-        const Data = await Response.json();
-
-        MetricDistance = Data["metric"];
-    });
-
-    Map.on("click", async function(e)
-    {
-        const { lat, lng } = e.latlng;
-
-        if (ClickMarker)
-        {
-            Map.removeLayer(ClickMarker);
-        }
-
-        ClickMarker = L.marker([lat, lng]).addTo(Map)
-            //.bindPopup("Calculating...")
-            //.openPopup();
-
         try
         {
             const Response = await fetch('http://localhost:18080/calculate',
             {
                 method: 'POST',
-                body: JSON.stringify({ lat: lat, lon: lng })
+                body: JSON.stringify({ lat: aLat, lon: aLon })
             });
 
             const Data = await Response.json();
 
             const ResultsContainer = document.getElementById('results');
             ResultsContainer.innerHTML = '';
+
+            Map.eachLayer((layer) =>
+            {
+                if (layer instanceof L.Marker || layer instanceof L.Polyline)
+                {
+                    if (layer !== ClickMarker)
+                    {
+                        Map.removeLayer(layer);
+                    }
+                }
+            });
 
             Data.forEach(Landmark => {
                 const Div = document.createElement('div');
@@ -92,5 +66,157 @@ document.addEventListener("DOMContentLoaded", function()
             console.error("Error connecting to C++ server:", error);
             ClickMarker.setPopupContent("Server Error! Check C++ terminal.").openPopup();
         }
+    }
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(Map);
+
+    let ClickMarker;
+
+    SwitchKilometersButton.addEventListener("click", async function()
+    {
+        UpdateActiveButton(this);
+
+        const Response = await fetch('http://localhost:18080/changekm',
+        {
+            method: 'POST'
+        });
+
+        const Data = await Response.json();
+
+        MetricDistance = Data["metric"];
+
+        if(LastLat != null && LastLon != null)
+        {
+            CalculateDistance(LastLat, LastLon);
+        }
+    });
+
+    SwitchMilesButton.addEventListener("click", async function()
+    {
+        UpdateActiveButton(this);
+
+        const Response = await fetch('http://localhost:18080/changemiles',
+        {
+            method: 'POST'
+        });
+
+        const Data = await Response.json();
+
+        MetricDistance = Data["metric"];
+
+        if(LastLat != null && LastLon != null)
+        {
+            CalculateDistance(LastLat, LastLon);
+        }
+    });
+
+    SwitchFootButton.addEventListener("click", async function()
+    {
+        UpdateActiveButton(this);
+
+        const Response = await fetch('http://localhost:18080/changefoot',
+        {
+            method: 'POST'
+        });
+
+        const Data = await Response.json();
+
+        MetricDistance = Data["metric"];
+
+        if(LastLat != null && LastLon != null)
+        {
+            CalculateDistance(LastLat, LastLon);
+        }
+    });
+
+    ContinentDropDown.addEventListener("change", async function()
+    {
+        let FilteredContinent = this.value;
+
+        const Response = await fetch('http://localhost:18080/changecontinent',
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({continent: FilteredContinent})
+        });
+
+        const Data = await Response.json();
+
+        if(LastLat != null && LastLon != null)
+        {
+            CalculateDistance(LastLat, LastLon);
+        }
+    });
+
+    CategoryDropDown.addEventListener("change", async function()
+    {
+        let FilteredCategory = this.value;
+
+        const Response = await fetch('http://localhost:18080/changecategory',
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({category: FilteredCategory})
+        });
+
+        const Data = await Response.json();
+
+        if(LastLat != null && LastLon != null)
+        {
+            CalculateDistance(LastLat, LastLon);
+        }
+    });
+
+    CurrentLocationButton.addEventListener("click", async function()
+    {
+        if (!navigator.geolocation)
+        {
+            alert("Geolocalizacion no soportada por el navegador");
+            return;
+        }
+
+        navigator.geolocation.getCurrentPosition((position) => {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+
+            LastLat = lat;
+            LastLon = lon;
+
+            Map.flyTo([lat, lon], 14);
+
+            if (ClickMarker) Map.removeLayer(ClickMarker);
+            ClickMarker = L.marker([lat, lon]).addTo(Map)
+                .bindPopup("Ubicación actual")
+                .openPopup();
+
+            CalculateDistance(lat, lon);
+        },
+        (error) => {
+            console.error("Error obteniendo ubicación:", error);
+            alert("No se pudo obtener tu ubicación. Revisa los permisos de tu navegador.");
+        });
+    });
+
+    Map.on("click", async function(e)
+    {
+        const { lat, lng } = e.latlng;
+
+        LastLat = e.latlng.lat;
+        LastLon = e.latlng.lng;
+
+        if (ClickMarker)
+        {
+            Map.removeLayer(ClickMarker);
+        }
+
+        ClickMarker = L.marker([lat, lng]).addTo(Map)
+            //.bindPopup("Calculating...")
+            //.openPopup();
+
+        CalculateDistance(lat, lng);
     });
 });

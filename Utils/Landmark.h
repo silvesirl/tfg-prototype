@@ -3,6 +3,7 @@
 
 enum class LandmarkType
 {
+    NONE,
     MONUMENT,
     NATURALWONDER
 };
@@ -13,4 +14,5 @@ struct Landmark
     double Lat;
     double Lon;
     LandmarkType Type;
-}; 
+    std::string Continent;
+};

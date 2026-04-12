@@ -145,6 +145,14 @@ h3
     background-color: rgba(56, 189, 248, 0.1);
 }
 
+.row-items button.active {
+    background-color: var(--primary-color);
+    color: var(--bg-color);
+    border-color: var(--primary-color);
+    font-weight: 600;
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+}
+
 .info-text
 {
     font-size: 12px;
