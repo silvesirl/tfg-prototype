@@ -10,22 +10,22 @@
         <kr>랜드마크 API</kr>
     </label>
     <label id="Frontend-Dashboard">
-        <en>Dashboard</en>
-        <es>Panel de Control</es>
-        <ita>Pannello di controllo</ita>
-        <fr>Tableau de bord</fr>
-        <ch>仪表板</ch>
-        <jp>ダッシュボード</jp>
-        <kr>대시보드</kr>
+        <en>| Dashboard</en>
+        <es>| Panel de Control</es>
+        <ita>| Pannello di controllo</ita>
+        <fr>| Tableau de bord</fr>
+        <ch>| 仪表板</ch>
+        <jp>| ダッシュボード</jp>
+        <kr>| 대시보드</kr>
     </label>
     <label id="Frontend-History">
         <en>History</en>
         <es>Historial</es>
         <ita>Cronologia</ita>
         <fr>Historique</fr>
-        <ch>历史记录</ch>
+        <ch>历史</ch>
         <jp>履歴</jp>
-        <kr>히스토리</kr>
+        <kr>기록</kr>
     </label>
     <label id="Frontend-Waiting">
         <en>Waiting for searches...</en>
@@ -51,7 +51,7 @@
         <ita>Filtri geografici</ita>
         <fr>Filtres géographiques</fr>
         <ch>地理过滤</ch>
-        <jp>地理的フィルター</jp>
+        <jp>地理フィルター</jp>
         <kr>지리적 필터</kr>
     </label>
     <label id="Frontend-CurrentLocationButton">
@@ -78,7 +78,7 @@
         <ita>Vai</ita>
         <fr>Aller</fr>
         <ch>前往</ch>
-        <jp>移動</jp>
+        <jp>実行</jp>
         <kr>이동</kr>
     </label>
     <label id="Frontend-Distance">
@@ -158,7 +158,7 @@
         <es>Monumento 🏛️</es>
         <ita>Monumento 🏛️</ita>
         <fr>Monument 🏛️</fr>
-        <ch>纪念碑 🏛️</ch>
+        <ch>名胜古迹 🏛️</ch>
         <jp>記念碑 🏛️</jp>
         <kr>기념물 🏛️</kr>
     </label>
@@ -171,7 +171,7 @@
         <jp>自然の驚異 🌿</jp>
         <kr>자연의 신비 🌿</kr>
     </label>
-    <label id="MetricUnit-Kilometers">
+    <label id="Kilometers">
         <en>Kilometers</en>
         <es>Kilómetros</es>
         <ita>Chilometri</ita>
@@ -180,7 +180,7 @@
         <jp>キロメートル</jp>
         <kr>킬로미터</kr>
     </label>
-    <label id="MetricUnit-Miles">
+    <label id="Miles">
         <en>Miles</en>
         <es>Millas</es>
         <ita>Miglia</ita>
@@ -189,7 +189,7 @@
         <jp>マイル</jp>
         <kr>마일</kr>
     </label>
-    <label id="MetricUnit-Feet">
+    <label id="Feet">
         <en>Feet</en>
         <es>Pies</es>
         <ita>Piedi</ita>
@@ -203,7 +203,7 @@
         <es>Gran Muralla China</es>
         <ita>Grande Muraglia Cinese</ita>
         <fr>Grande Muraille de Chine</fr>
-        <ch>万里长城</ch>
+        <ch>长城</ch>
         <jp>万里の長城</jp>
         <kr>만리장성</kr>
     </label>
@@ -222,7 +222,7 @@
         <ita>Colosseo Romano</ita>
         <fr>Colisée</fr>
         <ch>罗马斗兽场</ch>
-        <jp>コロッセオ</jp>
+        <jp>コロッセウム</jp>
         <kr>콜로세움</kr>
     </label>
     <label id="Landmark-Itza">
@@ -348,7 +348,7 @@
         <ita>Ayers Rock</ita>
         <fr>Ayers Rock</fr>
         <ch>艾尔斯岩</ch>
-        <jp>エアーズロック</jp>
-        <kr>에어즈 락</kr>
+        <jp>ウルル (エアーズロック)</jp>
+        <kr>울루루 (에어즈 락)</kr>
     </label>
 </localization>

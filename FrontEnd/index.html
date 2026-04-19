@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Landmark-api</title>
+    <title data-translate="Frontend-Title">Landmark-api</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
@@ -10,7 +10,7 @@
 </head>
 <body>
     <header class="top-bar">
-        <h3>Landmark-api <span style="font-weight: 400; font-size: 14px; color: var(--text-muted);">| Dashboard</span></h3>
+        <h3 data-translate="Frontend-Title">Landmark-api <span data-translate="Frontend-Dashboard" style="font-weight: 400; font-size: 14px; color: var(--text-muted);">| Dashboard</span></h3>
         <select id="Language" class="language-select">
             <option value="en">🇺🇸 English</option>
             <option value="es">🇪🇸 Español</option>
@@ -25,43 +25,43 @@
     <div class="main-container">
         <div class="map-wrapper">
             <div id="map"></div>
-            <button id="CurrentLocationButton">📍 Usar Mi Ubicación Actual</button>
+            <button id="CurrentLocationButton" data-translate="Frontend-CurrentLocationButton">📍 Usar Mi Ubicación Actual</button>
         </div>
 
         <div class="history-panel">
-            <h3>Historial</h3>
+            <h3 data-translate="Frontend-History">Historial</h3>
             <div id="results">
-                <p style="color: var(--text-muted); font-size: 14px;">Esperando búsquedas...</p>
+                <p data-translate="Frontend-Waiting" style="color: var(--text-muted); font-size: 14px;">Esperando búsquedas...</p>
             </div>
         </div>
     </div>
 
     <div class="bottom-toolbar">
         <div class="tool-group">
-            <div class="info-text">Unidad de Distancia</div>
+            <div class="info-text" data-translate="Frontend-MetricUnitMenu">Unidad de Distancia</div>
             <div class="row-items">
-                <button id="ChangeKilometers" class="active">Kilómetros</button>
-                <button id="ChangeMiles">Millas</button>
-                <button id="ChangeFoot">Pies</button>
+                <button id="ChangeKilometers" class="active" data-translate="Kilometers">Kilómetros</button>
+                <button id="ChangeMiles" data-translate="Miles">Millas</button>
+                <button id="ChangeFoot" data-translate="Feet">Pies</button>
             </div>
         </div>
 
         <div class="tool-group">
-            <div class="info-text">Filtros Geográficos</div>
+            <div class="info-text" data-translate="Frontend-GeographicalFiltersMenu">Filtros Geográficos</div>
             <div class="row-items">
                 <select id="Continente">
                     <option value="-">-</option>
-                    <option value="Europa">Europa</option>
-                    <option value="Africa">África</option>
-                    <option value="Asia">Asia</option>
-                    <option value="America">América</option>
-                    <option value="Oceania">Oceanía</option>
+                    <option value="Europe" data-translate="Continent-Europe">Europe</option>
+                    <option value="Africa" data-translate="Continent-Africa">Africa</option>
+                    <option value="Asia" data-translate="Continent-Asia">Asia</option>
+                    <option value="America" data-translate="Continent-America">America</option>
+                    <option value="Oceania" data-translate="Continent-Oceania">Oceania</option>
                 </select>
 
                 <select id="Categoria">
                      <option value="-">-</option>
-                    <option value="Monumento">🏛️ Monumento</option>
-                    <option value="Natural">🌿 Natural</option>
+                    <option value="Monumento" data-translate="Type-Monument">🏛️ Monumento</option>
+                    <option value="Natural" data-translate="Type-Natural">🌿 Natural</option>
                 </select>
             </div>
         </div>

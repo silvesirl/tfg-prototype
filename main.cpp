@@ -25,14 +25,14 @@ Landmark CurrentLocation = {"Your location", 0.0 ,0.0};
 std::vector<Landmark> RegisteredLandmarks = {
     {"Gran Muralla China", 40.4319, 116.5704, LandmarkType::MONUMENT, "Asia", "https://content.nationalgeographic.com.es/medio/2014/06/12/china2_1787x2000.jpg", "https://maps.app.goo.gl/fY9fCMhcmmrTFhH78"},
     {"Petra", 30.3285, 35.4444, LandmarkType::MONUMENT, "Asia", "https://isram.com/wp-content/uploads/2018/01/Petra-Jordan-Ad-Deir-Facade.jpg", "https://maps.app.goo.gl/WM7XU9ar5st97oRH7"},
-    {"Coliseo Romano", 41.8902, 12.4922, LandmarkType::MONUMENT, "Europa", "https://www.enroma.com/wp-content/uploads/elementor/thumbs/Coliseo-Romano-p9hfybrrriyw7zyeoat3i5xq91dbuq09smp8uhsmrk.jpg", "https://maps.app.goo.gl/DwDBFFh9buRTCfHM6"},
+    {"Coliseo Romano", 41.8902, 12.4922, LandmarkType::MONUMENT, "Europe", "https://www.enroma.com/wp-content/uploads/elementor/thumbs/Coliseo-Romano-p9hfybrrriyw7zyeoat3i5xq91dbuq09smp8uhsmrk.jpg", "https://maps.app.goo.gl/DwDBFFh9buRTCfHM6"},
     {"Chichén Itzá", 20.6843, -88.5678, LandmarkType::MONUMENT, "America", "https://www.mostbeautifulspots.com/wp-content/uploads/2016/03/Ayers-Rock-Uluru.jpg", "https://maps.app.goo.gl/fwUZyHwoR1y5RrXd9"},
     {"Machu Picchu", -13.1631, -72.5450, LandmarkType::MONUMENT, "America", "https://www.pakistantraveler.com/wp-content/uploads/2022/09/machu-2-1536x1028.jpg", "https://maps.app.goo.gl/ZvpkfywUcq9BF8BE7"},
     {"Taj Mahal", 27.1751, 78.0421, LandmarkType::MONUMENT, "Asia", "https://cdn.britannica.com/86/170586-050-AB7FEFAE/Taj-Mahal-Agra-India.jpg", "https://maps.app.goo.gl/xfJPPJgEuWSUX6Sw6"},
     {"Cristo Redentor", -22.9519, -43.2105, LandmarkType::MONUMENT, "America", "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh6QXwZ4FfSBArm4iTJLCsFi_MWb-vBId1rYyRK09rrZXGq_edDZ5swVEOov3JG77m009OXexronGQXuJhAfSZ_mXC4PshKh-rAcszS0WqmBa3lcIT5MrFkpHnYkXHRI0cNrENZyikctyk/s1600/cristo-redentor.jpg", "https://maps.app.goo.gl/t3v3jEFvV3Xus94D6"},
-    {"Sagrada Familia", 41.4036, 2.1744, LandmarkType::MONUMENT, "Europa", "https://blog.centraldereservas.com/wp-content/uploads/2017/02/Sagrada-familia.-Barcelona-Fotolia_102733741_Subscription_Monthly_M.jpg", "https://maps.app.goo.gl/avcxtxZb7qn5o9mH6"},
+    {"Sagrada Familia", 41.4036, 2.1744, LandmarkType::MONUMENT, "Europe", "https://blog.centraldereservas.com/wp-content/uploads/2017/02/Sagrada-familia.-Barcelona-Fotolia_102733741_Subscription_Monthly_M.jpg", "https://maps.app.goo.gl/avcxtxZb7qn5o9mH6"},
     {"Estatua de la Libertad", 40.6892, -74.0445, LandmarkType::MONUMENT, "America", "https://springinstitute.org/wp-content/uploads/2019/11/statue-of-liberty.jpeg", "https://maps.app.goo.gl/YFkjXjXdSKRydGnSA"},
-    {"Torre Eiffel", 48.8584, 2.2945, LandmarkType::MONUMENT, "Europa", "https://traveldigg.com/wp-content/uploads/2016/06/Eiffel-Tower-Paris-France-720x404.jpg", "https://maps.app.goo.gl/rxazUxbpbxd5vxGg9"},
+    {"Torre Eiffel", 48.8584, 2.2945, LandmarkType::MONUMENT, "Europe", "https://traveldigg.com/wp-content/uploads/2016/06/Eiffel-Tower-Paris-France-720x404.jpg", "https://maps.app.goo.gl/rxazUxbpbxd5vxGg9"},
     {"Cataratas del Niágara", 43.0782, -79.0757, LandmarkType::NATURALWONDER, "America", "https://cdn.holidayguru.es/wp-content/uploads/2016/07/Kanada_Niagara_Wasserfall_iStock-1058667536_900x600.jpg", "https://maps.app.goo.gl/hoPvQNP59kGr9LoUA"},
     {"Monte Kilimanjaro", -3.0674, 37.3556, LandmarkType::NATURALWONDER, "Africa", "https://s3.amazonaws.com/cdn.micato.com/wp-content/uploads/2018/09/07224331/mt-kilimanjaro-1110x700.jpg", "https://maps.app.goo.gl/6HiWVLDzTvZw9kKU7"},
     {"Monte Everest", 27.9881, 86.9250, LandmarkType::NATURALWONDER, "Asia", "https://upload.wikimedia.org/wikipedia/commons/b/bf/Mt._Everest_from_Gokyo_Ri_November_5%2C_2012_Cropped.jpg", "https://maps.app.goo.gl/HnZWH9eTDdZduVxM9"},
@@ -91,7 +91,7 @@ double HaversineDistanceCalculation(Landmark aCurrentLandmark, Landmark aMappedL
 
         case DistanceMetric::FOOT:
             Distance = Distance * FEET_TRANSFORM;
-            UnitMetric = "Foot";
+            UnitMetric = "Feet";
             break;
     }
 
@@ -155,7 +155,7 @@ int main()
 
         nlohmann::json JsonResponse;
 
-        JsonResponse["metric"] = "Foot";
+        JsonResponse["metric"] = "Feet";
 
         std::cout << "Cambiada metrica de distancia a " << JsonResponse["metric"] << std::endl;
 

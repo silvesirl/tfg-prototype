@@ -14,7 +14,42 @@ var RedIcon = new L.Icon({
     shadowSize: [41, 41]
 });
 
-document.addEventListener("DOMContentLoaded", function()
+let LocalizationsBody = null;
+let LanguageChosen = null;
+
+async function LoadLocalizationFile()
+{
+    try
+    {
+        const Response = await fetch("../Localization.xml");
+        const XMLBody = await Response.text();
+        const Parser = new DOMParser();
+        LocalizationsBody = Parser.parseFromString(XMLBody, "application/xml");
+    }
+    catch (err)
+    {
+        console.error("Failed to load localization:", err);
+    }
+}
+
+function GetTranslation(aId)
+{
+    const LabelNode = LocalizationsBody.querySelector(`label[id="${aId}"]`);
+    return LabelNode.querySelector(LanguageChosen).firstChild.nodeValue;
+}
+
+function ApplyTranslations()
+{
+    const TranslatableElements = document.querySelectorAll('[data-translate]');
+
+    TranslatableElements.forEach(SingleElement =>
+    {
+        const TranslatedText = GetTranslation(SingleElement.getAttribute('data-translate'))
+        SingleElement.textContent = TranslatedText;
+    });
+}
+
+document.addEventListener("DOMContentLoaded", async function()
 {
     Map = L.map('map').setView([41.38, 2.17], 13);
 
@@ -25,6 +60,11 @@ document.addEventListener("DOMContentLoaded", function()
     const CategoryDropDown = document.getElementById("Categoria");
     const CurrentLocationButton = document.getElementById("CurrentLocationButton");
     const LanguageDropDown = document.getElementById("Language");
+
+    LanguageChosen = LanguageDropDown.value
+
+    await LoadLocalizationFile();
+    ApplyTranslations();
 
     function UpdateActiveButton(aActiveButton)
     {
@@ -61,20 +101,27 @@ document.addEventListener("DOMContentLoaded", function()
                 }
             });
 
+            const MetricUnit = GetTranslation(MetricDistance);
+            const GoText = GetTranslation("Frontend-Go");
+            const DistanceText = GetTranslation("Frontend-Distance");
+            const ContinentText = GetTranslation("Frontend-Continent");
+            const LinkText = GetTranslation("Frontend-Link");
             Data.forEach(Landmark => {
                 const Div = document.createElement('div');
                 Div.className = 'result-item';
                 Div.innerHTML = `
-                    <b>${Landmark.name}</b>: ${Landmark.distance.toFixed(2)} ${MetricDistance}
-                    <button onclick="Map.flyTo([${Landmark.lat}, ${Landmark.lon}], 15)">Ir</button>`;
+                    <b>${Landmark.name}</b>: ${Landmark.distance.toFixed(2)} ${MetricUnit}
+                    <button onclick="Map.flyTo([${Landmark.lat}, ${Landmark.lon}], 15)">${GoText}</button>`;
                 ResultsContainer.appendChild(Div);
+
+                const LandmarkContinent = GetTranslation("Continent-" + Landmark.continent);
 
                 L.marker([Landmark.lat, Landmark.lon]).addTo(Map)
                 .bindPopup(`
                     <b>${Landmark.name}</b><br>
-                    Distancia: ${Landmark.distance.toFixed(2)} ${MetricDistance}<br>
-                    Continente: ${Landmark.continent}<br>
-                    <a href="${Landmark.maplink}" target="_blank">Link</a><br>
+                    ${DistanceText} ${Landmark.distance.toFixed(2)} ${MetricUnit}<br>
+                    ${ContinentText} ${LandmarkContinent}<br>
+                    <a href="${Landmark.maplink}" target="_blank">${LinkText}</a><br>
                     <img src="${Landmark.imageurl}" width="200" style="margin-top: 5px;">
                 `);
             });                 
@@ -189,7 +236,7 @@ document.addEventListener("DOMContentLoaded", function()
 
     LanguageDropDown.addEventListener("change", async function()
     {
-        let LanguageChosen = this.value;
+        LanguageChosen = this.value;
 
         const Response = await fetch('http://localhost:18080/changelanguage',
         {
@@ -199,6 +246,13 @@ document.addEventListener("DOMContentLoaded", function()
             },
             body: JSON.stringify({language: LanguageChosen})
         });
+
+        ApplyTranslations();
+
+        if(LastLat != null && LastLon != null)
+        {
+            CalculateDistance(LastLat, LastLon);
+        }
 
         const Data = await Response.json();
     });
@@ -212,20 +266,21 @@ document.addEventListener("DOMContentLoaded", function()
         }
 
         navigator.geolocation.getCurrentPosition((position) => {
-            const lat = position.coords.latitude;
-            const lon = position.coords.longitude;
+            const Lat = position.coords.latitude;
+            const Lon = position.coords.longitude;
 
-            LastLat = lat;
-            LastLon = lon;
+            LastLat = Lat;
+            LastLon = Lon;
 
-            Map.flyTo([lat, lon], 14);
+            Map.flyTo([Lat, Lon], 14);
 
             if (ClickMarker) Map.removeLayer(ClickMarker);
-            ClickMarker = L.marker([lat, lon],{icon: RedIcon}).addTo(Map)
-                .bindPopup("Ubicación actual")
+            const LocationText = GetTranslation("Frontend-CurrentLocation");
+            ClickMarker = L.marker([Lat, Lon],{icon: RedIcon}).addTo(Map)
+                .bindPopup(LocationText)
                 .openPopup();
 
-            CalculateDistance(lat, lon);
+            CalculateDistance(Lat, Lon);
         },
         (error) => {
             console.error("Error obteniendo ubicación:", error);
@@ -245,8 +300,10 @@ document.addEventListener("DOMContentLoaded", function()
             Map.removeLayer(ClickMarker);
         }
 
+        const LocationText = GetTranslation("Frontend-CurrentLocation");
+
         ClickMarker = L.marker([lat, lng],{icon: RedIcon}).addTo(Map)
-            .bindPopup("Ubicación actual")
+            .bindPopup(LocationText)
             .openPopup();
 
         CalculateDistance(lat, lng);
