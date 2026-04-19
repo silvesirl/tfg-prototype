@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <title>Landmark-api</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
@@ -8,7 +9,18 @@
     <script src="script.js" defer></script>
 </head>
 <body>
-    <h3>Landmark-api <span style="font-weight: 400; font-size: 14px; color: var(--text-muted);">| Dashboard</span></h3>
+    <header class="top-bar">
+        <h3>Landmark-api <span style="font-weight: 400; font-size: 14px; color: var(--text-muted);">| Dashboard</span></h3>
+        <select id="Language" class="language-select">
+            <option value="en">🇺🇸 English</option>
+            <option value="es">🇪🇸 Español</option>
+            <option value="ita">🇮🇹 Italiano</option>
+            <option value="fr">🇫🇷 Français</option>
+            <option value="ch">🇨🇳 中文</option>
+            <option value="jp">🇯🇵 日本語</option>
+            <option value="kr">🇰🇷 한국어</option>
+        </select>
+    </header>
 
     <div class="main-container">
         <div class="map-wrapper">

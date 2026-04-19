@@ -3,6 +3,17 @@ let MetricDistance = "Kilometers";
 let LastLat = null;
 let LastLon = null;
 
+let ClickMarker = null
+
+var RedIcon = new L.Icon({
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+});
+
 document.addEventListener("DOMContentLoaded", function()
 {
     Map = L.map('map').setView([41.38, 2.17], 13);
@@ -13,6 +24,7 @@ document.addEventListener("DOMContentLoaded", function()
     const ContinentDropDown = document.getElementById("Continente");
     const CategoryDropDown = document.getElementById("Categoria");
     const CurrentLocationButton = document.getElementById("CurrentLocationButton");
+    const LanguageDropDown = document.getElementById("Language");
 
     function UpdateActiveButton(aActiveButton)
     {
@@ -58,7 +70,13 @@ document.addEventListener("DOMContentLoaded", function()
                 ResultsContainer.appendChild(Div);
 
                 L.marker([Landmark.lat, Landmark.lon]).addTo(Map)
-                .bindPopup(`<b>${Landmark.name}</b><br>Distancia: ${Landmark.distance.toFixed(2)}${MetricDistance}`);
+                .bindPopup(`
+                    <b>${Landmark.name}</b><br>
+                    Distancia: ${Landmark.distance.toFixed(2)} ${MetricDistance}<br>
+                    Continente: ${Landmark.continent}<br>
+                    <a href="${Landmark.maplink}" target="_blank">Link</a><br>
+                    <img src="${Landmark.imageurl}" width="200" style="margin-top: 5px;">
+                `);
             });                 
         }
         catch (error)
@@ -69,8 +87,6 @@ document.addEventListener("DOMContentLoaded", function()
     }
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(Map);
-
-    let ClickMarker;
 
     SwitchKilometersButton.addEventListener("click", async function()
     {
@@ -171,6 +187,22 @@ document.addEventListener("DOMContentLoaded", function()
         }
     });
 
+    LanguageDropDown.addEventListener("change", async function()
+    {
+        let LanguageChosen = this.value;
+
+        const Response = await fetch('http://localhost:18080/changelanguage',
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({language: LanguageChosen})
+        });
+
+        const Data = await Response.json();
+    });
+
     CurrentLocationButton.addEventListener("click", async function()
     {
         if (!navigator.geolocation)
@@ -189,7 +221,7 @@ document.addEventListener("DOMContentLoaded", function()
             Map.flyTo([lat, lon], 14);
 
             if (ClickMarker) Map.removeLayer(ClickMarker);
-            ClickMarker = L.marker([lat, lon]).addTo(Map)
+            ClickMarker = L.marker([lat, lon],{icon: RedIcon}).addTo(Map)
                 .bindPopup("Ubicación actual")
                 .openPopup();
 
@@ -213,9 +245,9 @@ document.addEventListener("DOMContentLoaded", function()
             Map.removeLayer(ClickMarker);
         }
 
-        ClickMarker = L.marker([lat, lng]).addTo(Map)
-            //.bindPopup("Calculating...")
-            //.openPopup();
+        ClickMarker = L.marker([lat, lng],{icon: RedIcon}).addTo(Map)
+            .bindPopup("Ubicación actual")
+            .openPopup();
 
         CalculateDistance(lat, lng);
     });

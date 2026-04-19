@@ -15,4 +15,6 @@ struct Landmark
     double Lon;
     LandmarkType Type;
     std::string Continent;
+    std::string Image;
+    std::string MapsLink;
 };

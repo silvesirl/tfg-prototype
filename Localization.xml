@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<localization>
+    <label id="Frontend-Title">
+        <en>LandMark-api</en>
+        <es>LandMark-api</es>
+        <ita>LandMark-api</ita>
+        <fr>LandMark-api</fr>
+        <ch>地标 API</ch>
+        <jp>ランドマーク API</jp>
+        <kr>랜드마크 API</kr>
+    </label>
+    <label id="Frontend-Dashboard">
+        <en>Dashboard</en>
+        <es>Panel de Control</es>
+        <ita>Pannello di controllo</ita>
+        <fr>Tableau de bord</fr>
+        <ch>仪表板</ch>
+        <jp>ダッシュボード</jp>
+        <kr>대시보드</kr>
+    </label>
+    <label id="Frontend-History">
+        <en>History</en>
+        <es>Historial</es>
+        <ita>Cronologia</ita>
+        <fr>Historique</fr>
+        <ch>历史记录</ch>
+        <jp>履歴</jp>
+        <kr>히스토리</kr>
+    </label>
+    <label id="Frontend-Waiting">
+        <en>Waiting for searches...</en>
+        <es>Esperando búsquedas...</es>
+        <ita>In attesa di ricerche...</ita>
+        <fr>En attente de recherches...</fr>
+        <ch>正在等待查询...</ch>
+        <jp>検索を待っています...</jp>
+        <kr>검색을 기다리는 중...</kr>
+    </label>
+    <label id="Frontend-MetricUnitMenu">
+        <en>Distance Metric Unit</en>
+        <es>Unidad de Distancia</es>
+        <ita>Unità di misura distanza</ita>
+        <fr>Unité de distance</fr>
+        <ch>距离单位</ch>
+        <jp>距離単位</jp>
+        <kr>거리 단위</kr>
+    </label>
+    <label id="Frontend-GeographicalFiltersMenu">
+        <en>Geographical Filters</en>
+        <es>Filtros Geográficos</es>
+        <ita>Filtri geografici</ita>
+        <fr>Filtres géographiques</fr>
+        <ch>地理过滤</ch>
+        <jp>地理的フィルター</jp>
+        <kr>지리적 필터</kr>
+    </label>
+    <label id="Frontend-CurrentLocationButton">
+        <en>📍 Use my current location</en>
+        <es>📍 Usar mi ubicación actual</es>
+        <ita>📍 Usa la mia posizione attuale</ita>
+        <fr>📍 Utiliser ma position actuelle</fr>
+        <ch>📍 使用我的当前位置</ch>
+        <jp>📍 現在地を使用する</jp>
+        <kr>📍 현재 위치 사용</kr>
+    </label>
+    <label id="Frontend-CurrentLocation">
+        <en>Current location</en>
+        <es>Ubicación actual</es>
+        <ita>Posizione attuale</ita>
+        <fr>Position actuelle</fr>
+        <ch>当前位置</ch>
+        <jp>現在地</jp>
+        <kr>현재 위치</kr>
+    </label>
+    <label id="Frontend-Go">
+        <en>Go</en>
+        <es>Ir</es>
+        <ita>Vai</ita>
+        <fr>Aller</fr>
+        <ch>前往</ch>
+        <jp>移動</jp>
+        <kr>이동</kr>
+    </label>
+    <label id="Frontend-Distance">
+        <en>Distance: </en>
+        <es>Distancia: </es>
+        <ita>Distanza: </ita>
+        <fr>Distance: </fr>
+        <ch>距离: </ch>
+        <jp>距離: </jp>
+        <kr>거리: </kr>
+    </label>
+    <label id="Frontend-Continent">
+        <en>Continent: </en>
+        <es>Continente: </es>
+        <ita>Continente: </ita>
+        <fr>Continent: </fr>
+        <ch>大洲: </ch>
+        <jp>大陸: </jp>
+        <kr>대륙: </kr>
+    </label>
+    <label id="Frontend-Link">
+        <en>Link</en>
+        <es>Enlace</es>
+        <ita>Link</ita>
+        <fr>Lien</fr>
+        <ch>链接</ch>
+        <jp>リンク</jp>
+        <kr>링크</kr>
+    </label>
+    <label id="Continent-Europe">
+        <en>Europe</en>
+        <es>Europa</es>
+        <ita>Europa</ita>
+        <fr>Europe</fr>
+        <ch>欧洲</ch>
+        <jp>ヨーロッパ</jp>
+        <kr>유럽</kr>
+    </label>
+    <label id="Continent-Africa">
+        <en>Africa</en>
+        <es>África</es>
+        <ita>Africa</ita>
+        <fr>Afrique</fr>
+        <ch>非洲</ch>
+        <jp>アフリカ</jp>
+        <kr>아프리카</kr>
+    </label>
+    <label id="Continent-America">
+        <en>America</en>
+        <es>América</es>
+        <ita>America</ita>
+        <fr>Amérique</fr>
+        <ch>美洲</ch>
+        <jp>アメリカ</jp>
+        <kr>아메리카</kr>
+    </label>
+    <label id="Continent-Asia">
+        <en>Asia</en>
+        <es>Asia</es>
+        <ita>Asia</ita>
+        <fr>Asie</fr>
+        <ch>亚洲</ch>
+        <jp>アジア</jp>
+        <kr>아시아</kr>
+    </label>
+    <label id="Continent-Oceania">
+        <en>Oceania</en>
+        <es>Oceanía</es>
+        <ita>Oceania</ita>
+        <fr>Océanie</fr>
+        <ch>大洋洲</ch>
+        <jp>オセアニア</jp>
+        <kr>오세아니아</kr>
+    </label>
+    <label id="Type-Monument">
+        <en>Monument 🏛️</en>
+        <es>Monumento 🏛️</es>
+        <ita>Monumento 🏛️</ita>
+        <fr>Monument 🏛️</fr>
+        <ch>纪念碑 🏛️</ch>
+        <jp>記念碑 🏛️</jp>
+        <kr>기념물 🏛️</kr>
+    </label>
+    <label id="Type-Natural">
+        <en>Natural wonder 🌿</en>
+        <es>Maravilla natural 🌿</es>
+        <ita>Meraviglia naturale 🌿</ita>
+        <fr>Merveille naturelle 🌿</fr>
+        <ch>自然奇观 🌿</ch>
+        <jp>自然の驚異 🌿</jp>
+        <kr>자연의 신비 🌿</kr>
+    </label>
+    <label id="MetricUnit-Kilometers">
+        <en>Kilometers</en>
+        <es>Kilómetros</es>
+        <ita>Chilometri</ita>
+        <fr>Kilomètres</fr>
+        <ch>公里</ch>
+        <jp>キロメートル</jp>
+        <kr>킬로미터</kr>
+    </label>
+    <label id="MetricUnit-Miles">
+        <en>Miles</en>
+        <es>Millas</es>
+        <ita>Miglia</ita>
+        <fr>Miles</fr>
+        <ch>英里</ch>
+        <jp>マイル</jp>
+        <kr>마일</kr>
+    </label>
+    <label id="MetricUnit-Feet">
+        <en>Feet</en>
+        <es>Pies</es>
+        <ita>Piedi</ita>
+        <fr>Pieds</fr>
+        <ch>英尺</ch>
+        <jp>フィート</jp>
+        <kr>피트</kr>
+    </label>
+    <label id="Landmark-Wall">
+        <en>Great Wall of China</en>
+        <es>Gran Muralla China</es>
+        <ita>Grande Muraglia Cinese</ita>
+        <fr>Grande Muraille de Chine</fr>
+        <ch>万里长城</ch>
+        <jp>万里の長城</jp>
+        <kr>만리장성</kr>
+    </label>
+    <label id="Landmark-Petra">
+        <en>Petra</en>
+        <es>Petra</es>
+        <ita>Petra</ita>
+        <fr>Pétra</fr>
+        <ch>佩特拉</ch>
+        <jp>ペトラ</jp>
+        <kr>페트라</kr>
+    </label>
+    <label id="Landmark-Colisseum">
+        <en>Roman Colosseum</en>
+        <es>Coliseo Romano</es>
+        <ita>Colosseo Romano</ita>
+        <fr>Colisée</fr>
+        <ch>罗马斗兽场</ch>
+        <jp>コロッセオ</jp>
+        <kr>콜로세움</kr>
+    </label>
+    <label id="Landmark-Itza">
+        <en>Chichen Itza</en>
+        <es>Chichén Itzá</es>
+        <ita>Chichén Itzá</ita>
+        <fr>Chichén Itzá</fr>
+        <ch>奇琴伊察</ch>
+        <jp>チチェン・イッツァ</jp>
+        <kr>치첸 이트사</kr>
+    </label>
+    <label id="Landmark-Picchu">
+        <en>Machu Picchu</en>
+        <es>Machu Picchu</es>
+        <ita>Machu Picchu</ita>
+        <fr>Machu Picchu</fr>
+        <ch>马丘比丘</ch>
+        <jp>マチュ・ピチュ</jp>
+        <kr>마추픽추</kr>
+    </label>
+    <label id="Landmark-Taj">
+        <en>Taj Mahal</en>
+        <es>Taj Mahal</es>
+        <ita>Taj Mahal</ita>
+        <fr>Taj Mahal</fr>
+        <ch>泰姬陵</ch>
+        <jp>タージ・マハル</jp>
+        <kr>타지마할</kr>
+    </label>
+    <label id="Landmark-Christ">
+        <en>Christ the Redeemer</en>
+        <es>Cristo Redentor</es>
+        <ita>Cristo Redentore</ita>
+        <fr>Christ Rédempteur</fr>
+        <ch>救世基督像</ch>
+        <jp>コルコバードのキリスト像</jp>
+        <kr>구세주 그리스도상</kr>
+    </label>
+    <label id="Landmark-Sagrada">
+        <en>Sagrada Familia</en>
+        <es>Sagrada Familia</es>
+        <ita>Sagrada Familia</ita>
+        <fr>Sagrada Família</fr>
+        <ch>圣家堂</ch>
+        <jp>サグラダ・ファミリア</jp>
+        <kr>사그라다 파밀리아</kr>
+    </label>
+    <label id="Landmark-Liberty">
+        <en>Statue of Liberty</en>
+        <es>Estatua de la Libertad</es>
+        <ita>Statua della Libertà</ita>
+        <fr>Statue de la Liberté</fr>
+        <ch>自由女神像</ch>
+        <jp>自由の女神像</jp>
+        <kr>자유의 여신상</kr>
+    </label>
+    <label id="Landmark-Eiffel">
+        <en>Eiffel Tower</en>
+        <es>Torre Eiffel</es>
+        <ita>Torre Eiffel</ita>
+        <fr>Tour Eiffel</fr>
+        <ch>埃菲尔铁塔</ch>
+        <jp>エッフェル塔</jp>
+        <kr>에펠탑</kr>
+    </label>
+    <label id="Landmark-Niagara">
+        <en>Niagara Falls</en>
+        <es>Cataratas del Niágara</es>
+        <ita>Cascate del Niagara</ita>
+        <fr>Chutes du Niagara</fr>
+        <ch>尼亚加拉大瀑布</ch>
+        <jp>ナイアガラの滝</jp>
+        <kr>나이아가라 폭포</kr>
+    </label>
+    <label id="Landmark-Kilimanjaro">
+        <en>Mount Kilimanjaro</en>
+        <es>Monte Kilimanjaro</es>
+        <ita>Monte Kilimangiaro</ita>
+        <fr>Mont Kilimandjaro</fr>
+        <ch>乞力马扎罗山</ch>
+        <jp>キリマンジャロ</jp>
+        <kr>킬리만자로 산</kr>
+    </label>
+    <label id="Landmark-Everest">
+        <en>Mount Everest</en>
+        <es>Monte Everest</es>
+        <ita>Monte Everest</ita>
+        <fr>Mont Everest</fr>
+        <ch>珠穆朗玛峰</ch>
+        <jp>エベレスト</jp>
+        <kr>에베레스트 산</kr>
+    </label>
+    <label id="Landmark-SanAndreas">
+        <en>San Andreas Fault</en>
+        <es>Falla de San Andrés</es>
+        <ita>Faglia di Sant'Andrea</ita>
+        <fr>Faille de San Andreas</fr>
+        <ch>圣安德烈亚斯断层</ch>
+        <jp>サンアンドレアス断層</jp>
+        <kr>산 안드레아스 단층</kr>
+    </label>
+    <label id="Landmark-Tokyo">
+        <en>Tokyo Tower</en>
+        <es>Torre de Tokio</es>
+        <ita>Torre di Tokyo</ita>
+        <fr>Tour de Tokyo</fr>
+        <ch>东京铁塔</ch>
+        <jp>東京タワー</jp>
+        <kr>도쿄 타워</kr>
+    </label>
+    <label id="Landmark-Giza">
+        <en>Pyramids of Giza</en>
+        <es>Pirámides de Giza</es>
+        <ita>Piramidi di Giza</ita>
+        <fr>Pyramides de Gizeh</fr>
+        <ch>吉萨金字塔群</ch>
+        <jp>ギザのピラミッド</jp>
+        <kr>기자의 피라미드</kr>
+    </label>
+    <label id="Landmark-Ayers">
+        <en>Ayers Rock</en>
+        <es>Ayers Rock (Uluru)</es>
+        <ita>Ayers Rock</ita>
+        <fr>Ayers Rock</fr>
+        <ch>艾尔斯岩</ch>
+        <jp>エアーズロック</jp>
+        <kr>에어즈 락</kr>
+    </label>
+</localization>
