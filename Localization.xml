@@ -5,6 +5,7 @@
         <es>LandMark-api</es>
         <ita>LandMark-api</ita>
         <fr>LandMark-api</fr>
+        <de>LandMark-api</de>
         <ch>地标 API</ch>
         <jp>ランドマーク API</jp>
         <kr>랜드마크 API</kr>
@@ -14,6 +15,7 @@
         <es>| Panel de Control</es>
         <ita>| Pannello di controllo</ita>
         <fr>| Tableau de bord</fr>
+        <de>| Dashboard</de>
         <ch>| 仪表板</ch>
         <jp>| ダッシュボード</jp>
         <kr>| 대시보드</kr>
@@ -23,6 +25,7 @@
         <es>Historial</es>
         <ita>Cronologia</ita>
         <fr>Historique</fr>
+        <de>Verlauf</de>
         <ch>历史</ch>
         <jp>履歴</jp>
         <kr>기록</kr>
@@ -32,6 +35,7 @@
         <es>Esperando búsquedas...</es>
         <ita>In attesa di ricerche...</ita>
         <fr>En attente de recherches...</fr>
+        <de>Warten auf Suchanfragen...</de>
         <ch>正在等待查询...</ch>
         <jp>検索を待っています...</jp>
         <kr>검색을 기다리는 중...</kr>
@@ -41,6 +45,7 @@
         <es>Unidad de Distancia</es>
         <ita>Unità di misura distanza</ita>
         <fr>Unité de distance</fr>
+        <de>Entfernungsmaßeinheit</de>
         <ch>距离单位</ch>
         <jp>距離単位</jp>
         <kr>거리 단위</kr>
@@ -50,6 +55,7 @@
         <es>Filtros Geográficos</es>
         <ita>Filtri geografici</ita>
         <fr>Filtres géographiques</fr>
+        <de>Geografische Filter</de>
         <ch>地理过滤</ch>
         <jp>地理フィルター</jp>
         <kr>지리적 필터</kr>
@@ -59,6 +65,7 @@
         <es>📍 Usar mi ubicación actual</es>
         <ita>📍 Usa la mia posizione attuale</ita>
         <fr>📍 Utiliser ma position actuelle</fr>
+        <de>📍 Meinen aktuellen Standort verwenden</de>
         <ch>📍 使用我的当前位置</ch>
         <jp>📍 現在地を使用する</jp>
         <kr>📍 현재 위치 사용</kr>
@@ -68,6 +75,7 @@
         <es>Ubicación actual</es>
         <ita>Posizione attuale</ita>
         <fr>Position actuelle</fr>
+        <de>Aktueller Standort</de>
         <ch>当前位置</ch>
         <jp>現在地</jp>
         <kr>현재 위치</kr>
@@ -77,6 +85,7 @@
         <es>Ir</es>
         <ita>Vai</ita>
         <fr>Aller</fr>
+        <de>Los</de>
         <ch>前往</ch>
         <jp>実行</jp>
         <kr>이동</kr>
@@ -86,6 +95,7 @@
         <es>Distancia: </es>
         <ita>Distanza: </ita>
         <fr>Distance: </fr>
+        <de>Entfernung: </de>
         <ch>距离: </ch>
         <jp>距離: </jp>
         <kr>거리: </kr>
@@ -95,6 +105,7 @@
         <es>Continente: </es>
         <ita>Continente: </ita>
         <fr>Continent: </fr>
+        <de>Kontinent: </de>
         <ch>大洲: </ch>
         <jp>大陸: </jp>
         <kr>대륙: </kr>
@@ -104,6 +115,7 @@
         <es>Enlace</es>
         <ita>Link</ita>
         <fr>Lien</fr>
+        <de>Link</de>
         <ch>链接</ch>
         <jp>リンク</jp>
         <kr>링크</kr>
@@ -113,6 +125,7 @@
         <es>Europa</es>
         <ita>Europa</ita>
         <fr>Europe</fr>
+        <de>Europa</de>
         <ch>欧洲</ch>
         <jp>ヨーロッパ</jp>
         <kr>유럽</kr>
@@ -122,6 +135,7 @@
         <es>África</es>
         <ita>Africa</ita>
         <fr>Afrique</fr>
+        <de>Afrika</de>
         <ch>非洲</ch>
         <jp>アフリカ</jp>
         <kr>아프리카</kr>
@@ -131,6 +145,7 @@
         <es>América</es>
         <ita>America</ita>
         <fr>Amérique</fr>
+        <de>Amerika</de>
         <ch>美洲</ch>
         <jp>アメリカ</jp>
         <kr>아메리카</kr>
@@ -140,6 +155,7 @@
         <es>Asia</es>
         <ita>Asia</ita>
         <fr>Asie</fr>
+        <de>Asien</de>
         <ch>亚洲</ch>
         <jp>アジア</jp>
         <kr>아시아</kr>
@@ -149,6 +165,7 @@
         <es>Oceanía</es>
         <ita>Oceania</ita>
         <fr>Océanie</fr>
+        <de>Ozeanien</de>
         <ch>大洋洲</ch>
         <jp>オセアニア</jp>
         <kr>오세아니아</kr>
@@ -158,6 +175,7 @@
         <es>Monumento 🏛️</es>
         <ita>Monumento 🏛️</ita>
         <fr>Monument 🏛️</fr>
+        <de>Denkmal 🏛️</de>
         <ch>名胜古迹 🏛️</ch>
         <jp>記念碑 🏛️</jp>
         <kr>기념물 🏛️</kr>
@@ -167,6 +185,7 @@
         <es>Maravilla natural 🌿</es>
         <ita>Meraviglia naturale 🌿</ita>
         <fr>Merveille naturelle 🌿</fr>
+        <de>Naturwunder 🌿</de>
         <ch>自然奇观 🌿</ch>
         <jp>自然の驚異 🌿</jp>
         <kr>자연의 신비 🌿</kr>
@@ -176,6 +195,7 @@
         <es>Kilómetros</es>
         <ita>Chilometri</ita>
         <fr>Kilomètres</fr>
+        <de>Kilometer</de>
         <ch>公里</ch>
         <jp>キロメートル</jp>
         <kr>킬로미터</kr>
@@ -185,6 +205,7 @@
         <es>Millas</es>
         <ita>Miglia</ita>
         <fr>Miles</fr>
+        <de>Meilen</de>
         <ch>英里</ch>
         <jp>マイル</jp>
         <kr>마일</kr>
@@ -194,6 +215,7 @@
         <es>Pies</es>
         <ita>Piedi</ita>
         <fr>Pieds</fr>
+        <de>Fuß</de>
         <ch>英尺</ch>
         <jp>フィート</jp>
         <kr>피트</kr>
@@ -203,6 +225,7 @@
         <es>Gran Muralla China</es>
         <ita>Grande Muraglia Cinese</ita>
         <fr>Grande Muraille de Chine</fr>
+        <de>Chinesische Mauer</de>
         <ch>长城</ch>
         <jp>万里の長城</jp>
         <kr>만리장성</kr>
@@ -212,6 +235,7 @@
         <es>Petra</es>
         <ita>Petra</ita>
         <fr>Pétra</fr>
+        <de>Petra</de>
         <ch>佩特拉</ch>
         <jp>ペトラ</jp>
         <kr>페트라</kr>
@@ -221,6 +245,7 @@
         <es>Coliseo Romano</es>
         <ita>Colosseo Romano</ita>
         <fr>Colisée</fr>
+        <de>Kolosseum</de>
         <ch>罗马斗兽场</ch>
         <jp>コロッセウム</jp>
         <kr>콜로세움</kr>
@@ -230,6 +255,7 @@
         <es>Chichén Itzá</es>
         <ita>Chichén Itzá</ita>
         <fr>Chichén Itzá</fr>
+        <de>Chichén Itzá</de>
         <ch>奇琴伊察</ch>
         <jp>チチェン・イッツァ</jp>
         <kr>치첸 이트사</kr>
@@ -239,6 +265,7 @@
         <es>Machu Picchu</es>
         <ita>Machu Picchu</ita>
         <fr>Machu Picchu</fr>
+        <de>Machu Picchu</de>
         <ch>马丘比丘</ch>
         <jp>マチュ・ピチュ</jp>
         <kr>마추픽추</kr>
@@ -248,6 +275,7 @@
         <es>Taj Mahal</es>
         <ita>Taj Mahal</ita>
         <fr>Taj Mahal</fr>
+        <de>Taj Mahal</de>
         <ch>泰姬陵</ch>
         <jp>タージ・マハル</jp>
         <kr>타지마할</kr>
@@ -257,6 +285,7 @@
         <es>Cristo Redentor</es>
         <ita>Cristo Redentore</ita>
         <fr>Christ Rédempteur</fr>
+        <de>Christus-Statue</de>
         <ch>救世基督像</ch>
         <jp>コルコバードのキリスト像</jp>
         <kr>구세주 그리스도상</kr>
@@ -266,6 +295,7 @@
         <es>Sagrada Familia</es>
         <ita>Sagrada Familia</ita>
         <fr>Sagrada Família</fr>
+        <de>Sagrada Família</de>
         <ch>圣家堂</ch>
         <jp>サグラダ・ファミリア</jp>
         <kr>사그라다 파밀리아</kr>
@@ -275,6 +305,7 @@
         <es>Estatua de la Libertad</es>
         <ita>Statua della Libertà</ita>
         <fr>Statue de la Liberté</fr>
+        <de>Freiheitsstatue</de>
         <ch>自由女神像</ch>
         <jp>自由の女神像</jp>
         <kr>자유의 여신상</kr>
@@ -284,6 +315,7 @@
         <es>Torre Eiffel</es>
         <ita>Torre Eiffel</ita>
         <fr>Tour Eiffel</fr>
+        <de>Eiffelturm</de>
         <ch>埃菲尔铁塔</ch>
         <jp>エッフェル塔</jp>
         <kr>에펠탑</kr>
@@ -293,6 +325,7 @@
         <es>Cataratas del Niágara</es>
         <ita>Cascate del Niagara</ita>
         <fr>Chutes du Niagara</fr>
+        <de>Niagarafälle</de>
         <ch>尼亚加拉大瀑布</ch>
         <jp>ナイアガラの滝</jp>
         <kr>나이아가라 폭포</kr>
@@ -302,6 +335,7 @@
         <es>Monte Kilimanjaro</es>
         <ita>Monte Kilimangiaro</ita>
         <fr>Mont Kilimandjaro</fr>
+        <de>Kilimandscharo</de>
         <ch>乞力马扎罗山</ch>
         <jp>キリマンジャロ</jp>
         <kr>킬리만자로 산</kr>
@@ -311,6 +345,7 @@
         <es>Monte Everest</es>
         <ita>Monte Everest</ita>
         <fr>Mont Everest</fr>
+        <de>Mount Everest</de>
         <ch>珠穆朗玛峰</ch>
         <jp>エベレスト</jp>
         <kr>에베레스트 산</kr>
@@ -320,6 +355,7 @@
         <es>Falla de San Andrés</es>
         <ita>Faglia di Sant'Andrea</ita>
         <fr>Faille de San Andreas</fr>
+        <de>San-Andreas-Verwerfung</de>
         <ch>圣安德烈亚斯断层</ch>
         <jp>サンアンドレアス断層</jp>
         <kr>산 안드레아스 단층</kr>
@@ -329,6 +365,7 @@
         <es>Torre de Tokio</es>
         <ita>Torre di Tokyo</ita>
         <fr>Tour de Tokyo</fr>
+        <de>Tokyo Tower</de>
         <ch>东京铁塔</ch>
         <jp>東京タワー</jp>
         <kr>도쿄 타워</kr>
@@ -338,6 +375,7 @@
         <es>Pirámides de Giza</es>
         <ita>Piramidi di Giza</ita>
         <fr>Pyramides de Gizeh</fr>
+        <de>Pyramiden von Gizeh</de>
         <ch>吉萨金字塔群</ch>
         <jp>ギザのピラミッド</jp>
         <kr>기자의 피라미드</kr>
@@ -347,6 +385,7 @@
         <es>Ayers Rock (Uluru)</es>
         <ita>Ayers Rock</ita>
         <fr>Ayers Rock</fr>
+        <de>Ayers Rock (Uluru)</de>
         <ch>艾尔斯岩</ch>
         <jp>ウルル (エアーズロック)</jp>
         <kr>울루루 (에어즈 락)</kr>

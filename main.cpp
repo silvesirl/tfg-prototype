@@ -216,6 +216,9 @@ int main()
             case Language::FR:
                 std::cout << "lenguaje cambiado a Frances" << std::endl;
                 break;
+            case Language::DE:
+                std::cout << "lenguaje cambiado a Aleman" << std::endl;
+                break;
             case Language::CH:
                 std::cout << "lenguaje cambiado a Chino" << std::endl;
                 break;

@@ -6,6 +6,7 @@ enum class Language
     ES,
     ITA,
     FR,
+    DE,
     CH,
     JP,
     KR
@@ -17,6 +18,7 @@ std::map<std::string, Language> LanguageMap =
     {"es", Language::ES},
     {"ita", Language::ITA},
     {"fr", Language::FR},
+    {"de", Language::DE},
     {"ch", Language::CH},
     {"jp", Language::JP},
     {"kr", Language::KR}
