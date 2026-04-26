@@ -107,10 +107,11 @@ document.addEventListener("DOMContentLoaded", async function()
             const ContinentText = GetTranslation("Frontend-Continent");
             const LinkText = GetTranslation("Frontend-Link");
             Data.forEach(Landmark => {
+                const TranslatedName = GetTranslation(Landmark.name);
                 const Div = document.createElement('div');
                 Div.className = 'result-item';
                 Div.innerHTML = `
-                    <b>${Landmark.name}</b>: ${Landmark.distance.toFixed(2)} ${MetricUnit}
+                    <b data-translate="${Landmark.name}">${TranslatedName}</b>: ${Landmark.distance.toFixed(2)} ${MetricUnit}
                     <button onclick="Map.flyTo([${Landmark.lat}, ${Landmark.lon}], 15)">${GoText}</button>`;
                 ResultsContainer.appendChild(Div);
 
@@ -246,6 +247,11 @@ document.addEventListener("DOMContentLoaded", async function()
             },
             body: JSON.stringify({language: LanguageChosen})
         });
+
+        if (ClickMarker)
+        {
+            ClickMarker.closePopup();
+        }
 
         ApplyTranslations();
 

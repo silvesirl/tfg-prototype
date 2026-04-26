@@ -2,8 +2,6 @@
 build/
 build*/
 *.exe
-.vscode/
-*.db
 *.o
 *.obj
 *.log

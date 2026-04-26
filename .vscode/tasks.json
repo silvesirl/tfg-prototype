@@ -1,0 +1,30 @@
+{
+    "tasks": [
+        {
+            "type": "cppbuild",
+            "label": "C/C++: cl.exe build active file",
+            "command": "cl.exe",
+            "args": [
+                "/Zi",
+                "/EHsc",
+                "/nologo",
+                "/std:c++20",
+                "/Fe${fileDirname}\\${fileBasenameNoExtension}.exe",
+                "${file}",
+                "${fileDirname}\\Utils\\sqlite3.c"
+            ],
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "problemMatcher": [
+                "$msCompile"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "Task corregida para incluir SQLite y C++20."
+        }
+    ],
+    "version": "2.0.0"
+}

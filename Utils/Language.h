@@ -32,4 +32,4 @@ static Language StringToType(const std::string& aLanguage)
     {
         return Iterator->second;
     }
-}
+};
