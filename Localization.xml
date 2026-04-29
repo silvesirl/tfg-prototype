@@ -390,4 +390,215 @@
         <jp>ウルル (エアーズロック)</jp>
         <kr>울루루 (에어즈 락)</kr>
     </label>
+    <label id="Landmark-Opera">
+        <en>Sydney Opera House</en>
+        <es>Ópera de Sídney</es>
+        <ita>Teatro dell'Opera di Sydney</ita>
+        <fr>Opéra de Sydney</fr>
+        <de>Sydney Opera House</de>
+        <ch>悉尼歌剧院</ch>
+        <jp>シドニー・オペラハウス</jp>
+        <kr>시드니 오페라 하우스</kr>
+    </label>
+    <label id="Landmark-Reef">
+        <en>Great Barrier Reef</en>
+        <es>Gran Barrera de Coral</es>
+        <ita>Grande Barriera Corallina</ita>
+        <fr>Grande Barrière de Corail</fr>
+        <de>Great Barrier Reef</de>
+        <ch>大堡礁</ch>
+        <jp>グレート・バリア・リーフ</jp>
+        <kr>그레이트 배리어 리프</kr>
+    </label>
+    <label id="Landmark-KingsValley">
+        <en>Valley of the Kings</en>
+        <es>Valle de los Reyes</es>
+        <ita>Valle dei Re</ita>
+        <fr>Vallée des Rois</fr>
+        <de>Tal der Könige</de>
+        <ch>帝王谷</ch>
+        <jp>王家の谷</jp>
+        <kr>왕들의 계곡</kr>
+    </label>
+    <label id="Landmark-Okavango">
+        <en>Okavango Delta</en>
+        <es>Delta del Okavango</es>
+        <ita>Delta dell'Okavango</ita>
+        <fr>Delta de l'Okavango</fr>
+        <de>Okavangodelta</de>
+        <ch>奥卡万戈三角洲</ch>
+        <jp>オカバンゴ・デルタ</jp>
+        <kr>오카방고 델타</kr>
+    </label>
+    <label id="Landmark-Baobabs">
+        <en>Avenue of the Baobabs</en>
+        <es>Avenida de los Baobabs</es>
+        <ita>Viale dei Baobab</ita>
+        <fr>Allée des baobabs</fr>
+        <de>Baobab-Allee</de>
+        <ch>猴面包树大道</ch>
+        <jp>バオバブの並木道</jp>
+        <kr>바오밥 나무 거리</kr>
+    </label>
+    <label id="Landmark-ElJem">
+        <en>Amphitheatre of El Jem</en>
+        <es>Anfiteatro de El Jem</es>
+        <ita>Anfiteatro romano di El Jem</ita>
+        <fr>Amphithéâtre d'El Jem</fr>
+        <de>Amphitheater von El Djem</de>
+        <ch>埃尔杰姆大竞技场</ch>
+        <jp>エル・ジェム円形闘技場</jp>
+        <kr>엘젬 원형경기장</kr>
+    </label>
+    <label id="Landmark-Milford">
+        <en>Milford Sound</en>
+        <es>Milford Sound</es>
+        <ita>Milford Sound</ita>
+        <fr>Milford Sound</fr>
+        <de>Milford Sound</de>
+        <ch>米尔福德峡湾</ch>
+        <jp>ミルフォード・サウンド</jp>
+        <kr>밀포드 사운드</kr>
+    </label>
+    <label id="Landmark-Victoria">
+        <en>Victoria Falls</en>
+        <es>Cataratas Victoria</es>
+        <ita>Cascate Vittoria</ita>
+        <fr>Chutes Victoria</fr>
+        <de>Victoriafälle</de>
+        <ch>维多利亚瀑布</ch>
+        <jp>ヴィクトリアの滝</jp>
+        <kr>빅토리아 폭포</kr>
+    </label>
+    <label id="Landmark-BigBen">
+        <en>Big Ben</en>
+        <es>Big Ben</es>
+        <ita>Big Ben</ita>
+        <fr>Big Ben</fr>
+        <de>Big Ben</de>
+        <ch>大本钟</ch>
+        <jp>ビッグ・ベン</jp>
+        <kr>빅 벤</kr>
+    </label>
+    <label id="Landmark-Acropolis">
+        <en>Acropolis of Athens</en>
+        <es>Acrópolis de Atenas</es>
+        <ita>Acropoli di Atene</ita>
+        <fr>Acropole d'Athènes</fr>
+        <de>Akropolis von Athen</de>
+        <ch>雅典卫城</ch>
+        <jp>アテナイのアクロポリス</jp>
+        <kr>아테네의 아크로폴리스</kr>
+    </label>
+    <label id="Landmark-Moher">
+        <en>Cliffs of Moher</en>
+        <es>Acantilados de Moher</es>
+        <ita>Scogliere di Moher</ita>
+        <fr>Falaises de Moher</fr>
+        <de>Cliffs of Moher</de>
+        <ch>莫赫悬崖</ch>
+        <jp>モハーの断崖</jp>
+        <kr>모허 절벽</kr>
+    </label>
+    <label id="Landmark-GiantCauseway">
+        <en>Giant's Causeway</en>
+        <es>Calzada del Gigante</es>
+        <ita>Selciato del gigante</ita>
+        <fr>Chaussée des Géants</fr>
+        <de>Damm des Riesen</de>
+        <ch>巨人堤道</ch>
+        <jp>ジャイアンツ・コーズウェー</jp>
+        <kr>거인의 발자취</kr>
+    </label>
+    <label id="Landmark-Dolomites">
+        <en>The Dolomites</en>
+        <es>Los Dolomitas</es>
+        <ita>Dolomiti</ita>
+        <fr>Les Dolomites</fr>
+        <de>Dolomiten</de>
+        <ch>多洛米蒂山脉</ch>
+        <jp>ドロミテ</jp>
+        <kr>돌로미티 산맥</kr>
+    </label>
+    <label id="Landmark-Canyon">
+        <en>Grand Canyon</en>
+        <es>Gran Cañón</es>
+        <ita>Gran Canyon</ita>
+        <fr>Grand Canyon</fr>
+        <de>Grand Canyon</de>
+        <ch>大峡谷</ch>
+        <jp>グランド・キャニオン</jp>
+        <kr>그랜드 캐니언</kr>
+    </label>
+    <label id="Landmark-GoldenGate">
+        <en>Golden Gate Bridge</en>
+        <es>Puente Golden Gate</es>
+        <ita>Ponte Golden Gate</ita>
+        <fr>Pont du Golden Gate</fr>
+        <de>Golden Gate Bridge</de>
+        <ch>金门大桥</ch>
+        <jp>ゴールデン・ゲート・ブリッジ</jp>
+        <kr>금문교</kr>
+    </label>
+    <label id="Landmark-AngelFalls">
+        <en>Angel Falls</en>
+        <es>Salto Ángel</es>
+        <ita>Salto Angel</ita>
+        <fr>Salto Ángel</fr>
+        <de>Angel-Fall</de>
+        <ch>安赫尔瀑布</ch>
+        <jp>エンジェルフォール</jp>
+        <kr>앙헬 폭포</kr>
+    </label>
+    <label id="Landmark-Galapagos">
+        <en>Galápagos Islands</en>
+        <es>Islas Galápagos</es>
+        <ita>Isole Galápagos</ita>
+        <fr>Îles Galápagos</fr>
+        <de>Galápagos-Inseln</de>
+        <ch>加拉帕戈斯群岛</ch>
+        <jp>ガラパゴス諸島</jp>
+        <kr>갈라파고스 제도</kr>
+    </label>
+
+    <label id="Landmark-ForbiddenCity">
+        <en>Forbidden City</en>
+        <es>Ciudad Prohibida</es>
+        <ita>Città Proibita</ita>
+        <fr>Cité Interdite</fr>
+        <de>Verbotene Stadt</de>
+        <ch>故宫</ch>
+        <jp>紫禁城</jp>
+        <kr>자금성</kr>
+    </label>
+    <label id="Landmark-Fuji">
+        <en>Mount Fuji</en>
+        <es>Monte Fuji</es>
+        <ita>Monte Fuji</ita>
+        <fr>Mont Fuji</fr>
+        <de>Fuji</de>
+        <ch>富士山</ch>
+        <jp>富士山</jp>
+        <kr>후지산</kr>
+    </label>
+    <label id="Landmark-AngkorWat">
+        <en>Angkor Wat</en>
+        <es>Angkor Wat</es>
+        <ita>Angkor Wat</ita>
+        <fr>Angkor Wat</fr>
+        <de>Angkor Wat</de>
+        <ch>吴哥窟</ch>
+        <jp>アンコール・ワット</jp>
+        <kr>앙코르 와트</kr>
+    </label>
+    <label id="Landmark-HaLongBay">
+        <en>Ha Long Bay</en>
+        <es>Bahía de Ha-Long</es>
+        <ita>Baia di Ha Long</ita>
+        <fr>Baie d'Ha Long</fr>
+        <de>Ha-Long-Bucht</de>
+        <ch>下龙湾</ch>
+        <jp>ハロン湾</jp>
+        <kr>하롱베이</kr>
+    </label>
 </localization>

@@ -119,7 +119,7 @@ document.addEventListener("DOMContentLoaded", async function()
 
                 L.marker([Landmark.lat, Landmark.lon]).addTo(Map)
                 .bindPopup(`
-                    <b>${Landmark.name}</b><br>
+                    <b>${TranslatedName}</b><br>
                     ${DistanceText} ${Landmark.distance.toFixed(2)} ${MetricUnit}<br>
                     ${ContinentText} ${LandmarkContinent}<br>
                     <a href="${Landmark.maplink}" target="_blank">${LinkText}</a><br>
