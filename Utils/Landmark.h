@@ -18,5 +18,3 @@ struct Landmark
     std::string Image;
     std::string MapsLink;
 };
-
-const char* DB_STRUCTURE = "SELECT name, latitude, longitude, type, continent, imageurl, mapsurl FROM landmarks";

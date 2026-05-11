@@ -8,7 +8,8 @@
 #include "Utils/GlobalConstants.h"
 #include "Utils/Language.h"
 
-#include "Utils/sqlite3.h"
+#include "ILandmarkDBRepository.h"
+#include "SQLiteLandmarkRepository.h"
 
 using JsonParser = nlohmann::json;
 
@@ -19,44 +20,11 @@ DistanceMetric DistanceMetricChosen = DistanceMetric::KILOMETERS;
 
 Language LanguageChosen = Language::EN;
 
-Landmark CurrentLocation = {"Your location", 0.0 ,0.0};
+Landmark CurrentLocation = {"Your location", 0.0, 0.0, LandmarkType::NONE, "", "", ""};
 
 std::vector<Landmark> LandmarkList;
 
-std::vector<Landmark> LoadDatabase(std::string aPath)
-{
-    sqlite3* DB;
-    sqlite3_stmt* Statement;
-
-    std::vector<Landmark> ReturnValue;
-
-    sqlite3_open(aPath.c_str(), &DB);
-
-    sqlite3_prepare_v2(DB, DB_STRUCTURE, -1, &Statement, nullptr);
-
-    while(sqlite3_step(Statement) == SQLITE_ROW)
-    {
-        Landmark CurrentLandmark;
-
-        CurrentLandmark.Name = reinterpret_cast<const char*>(sqlite3_column_text(Statement, 0));
-        CurrentLandmark.Lat = sqlite3_column_double(Statement, 1);
-        CurrentLandmark.Lon = sqlite3_column_double(Statement, 2);
-
-        std::string StringType = reinterpret_cast<const char*>(sqlite3_column_text(Statement, 3));
-        CurrentLandmark.Type = (StringType == "monument" ? LandmarkType::MONUMENT : LandmarkType::NATURALWONDER);
-
-        CurrentLandmark.Continent = reinterpret_cast<const char*>(sqlite3_column_text(Statement, 4));
-        CurrentLandmark.Image = reinterpret_cast<const char*>(sqlite3_column_text(Statement, 5));
-        CurrentLandmark.MapsLink = reinterpret_cast<const char*>(sqlite3_column_text(Statement, 6));
-
-        ReturnValue.push_back(CurrentLandmark);
-    }
-
-    sqlite3_finalize(Statement);
-    sqlite3_close(DB);
-
-    return ReturnValue;
-}
+std::unique_ptr<ILandmarkDBRepository> DBRepository;
 
 LandmarkType TransformStringToType(std::string aLandmarkType)
 {
@@ -120,7 +88,9 @@ int main()
 {
     httplib::Server Server;
 
-    LandmarkList = LoadDatabase(DB_PATH);
+    DBRepository = std::unique_ptr<ILandmarkDBRepository>(new SQLiteLandmarkRepository());
+
+    LandmarkList = DBRepository->GetAllLandmarks();
 
     Server.set_post_routing_handler([](const auto& req, auto& res) {
         res.set_header("Access-Control-Allow-Origin", "*");
