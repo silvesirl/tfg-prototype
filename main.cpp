@@ -4,10 +4,12 @@
 #include "Landmark.h"
 #include "DistanceMetric.h"
 #include "Utils/json.hpp"
-#include "Utils/httplib.h"
+#include "httplib.h"
 #include "Utils/GlobalConstants.h"
 #include "Utils/Language.h"
 
+#include "LandmarkController.h"
+#include "LandmarkService.h"
 #include "ILandmarkDBRepository.h"
 #include "SQLiteLandmarkRepository.h"
 
@@ -90,9 +92,16 @@ int main()
 
     DBRepository = std::unique_ptr<ILandmarkDBRepository>(new SQLiteLandmarkRepository());
 
-    LandmarkList = DBRepository->GetAllLandmarks();
+    auto LService = std::make_shared<LandmarkService>(*DBRepository);
 
-    Server.set_post_routing_handler([](const auto& req, auto& res) {
+    LandmarkController LController(Server, LService);
+
+    LController.RegisterRoutes();
+
+    /**
+
+    Server.set_post_routing_handler([](const auto& req, auto& res)
+    {
         res.set_header("Access-Control-Allow-Origin", "*");
         res.set_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
         res.set_header("Access-Control-Allow-Headers", "Content-Type");
@@ -224,49 +233,11 @@ int main()
         Response.set_content(JsonResponse.dump(), "application/json");
     });
 
-    Server.Post("/calculate", [](const httplib::Request& Request, httplib::Response& Response)
-    {
-        JsonParser RequestData = JsonParser::parse(Request.body);
-
-        std::cout << "Request recibida: latitud es " << RequestData["lat"] << "y la longitud es " << RequestData["lon"] << std::endl;
-
-        Landmark CurrentLocation = {CurrentLocation.Name, static_cast<double>(RequestData["lat"]), static_cast<double>(RequestData["lon"])};
-
-        JsonParser ResponseList = JsonParser::array();
-
-        for(Landmark CurrentLandmark : LandmarkList)
-        {
-            if(FilteredContinent != "-" && CurrentLandmark.Continent != FilteredContinent)
-            {
-                continue;
-            }
-
-            if(FilteredType != LandmarkType::NONE && CurrentLandmark.Type != FilteredType)
-            {
-                continue;
-            }
-
-            double DistanceBetweenPoints = HaversineDistanceCalculation(CurrentLocation, CurrentLandmark);
-
-            JsonParser LandMarkObject;
-
-            LandMarkObject["name"] = CurrentLandmark.Name;
-            LandMarkObject["distance"] = DistanceBetweenPoints;
-            LandMarkObject["lat"] = CurrentLandmark.Lat;
-            LandMarkObject["lon"] = CurrentLandmark.Lon;
-            LandMarkObject["category"] = CurrentLandmark.Type;
-            LandMarkObject["continent"] = CurrentLandmark.Continent;
-            LandMarkObject["imageurl"] = CurrentLandmark.Image;
-            LandMarkObject["maplink"] = CurrentLandmark.MapsLink;
-
-            ResponseList.push_back(LandMarkObject);
-        }
-
-        Response.set_content(ResponseList.dump(), "application/json");
-    });
+    */
 
     std::cout << "Servidor escuchando en http://localhost:18080..." << std::endl;
     Server.listen("0.0.0.0", SERVER_PORT);
+
     
     return 0;
 }

@@ -14,8 +14,6 @@ std::vector<Landmark> SQLiteLandmarkRepository::GetAllLandmarks()
     sqlite3_stmt* Statement = nullptr;
     std::vector<Landmark> ReturnValue;
 
-    std::cout << "Directorio actual: " << std::filesystem::current_path() << std::endl;
-
     if (sqlite3_open("DB/landmark.db", &DB) != SQLITE_OK) 
     {
         std::cerr << "Error: No se pudo abrir la base de datos: " 
