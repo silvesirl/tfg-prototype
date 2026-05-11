@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
+#include "Landmark.h"
 #include "ILandmarkDBRepository.h" 
-#include "Utils/Landmark.h"
 
 extern "C"
 {

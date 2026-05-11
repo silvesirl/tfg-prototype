@@ -1,8 +1,8 @@
 #include <iostream>
 #include <cmath>
 
-#include "Utils/Landmark.h"
-#include "Utils/DistanceMetric.h"
+#include "Landmark.h"
+#include "DistanceMetric.h"
 #include "Utils/json.hpp"
 #include "Utils/httplib.h"
 #include "Utils/GlobalConstants.h"
@@ -20,7 +20,7 @@ DistanceMetric DistanceMetricChosen = DistanceMetric::KILOMETERS;
 
 Language LanguageChosen = Language::EN;
 
-Landmark CurrentLocation = {"Your location", 0.0, 0.0, LandmarkType::NONE, "", "", ""};
+Landmark CurrentLocation = {"Your location", 0.0 ,0.0};
 
 std::vector<Landmark> LandmarkList;
 

@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
-#include "Utils/Landmark.h"
+#include "Landmark.h"
 
 class ILandmarkDBRepository
 {
