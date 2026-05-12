@@ -6,21 +6,26 @@
 #include "Landmark.h"
 #include "ILandmarkDBRepository.h"
 
-class LandmarkService {
+class LandmarkService
+{
 public:
     LandmarkService(ILandmarkDBRepository& repo);
 
-    double CalculateHaversine(double lat1, double lon1, double lat2, double lon2);
+    double CalculateHaversine(double aLatLocation1, double aLonLocation1, double aLatLocation2, double aLonLocation2);
 
-    std::vector<Landmark> GetProcessedLandmarks(
-        double userLat, 
-        double userLon, 
-        const std::string& continentFilter
-    );
+    std::vector<Landmark> GetProcessedLandmarks(double aLat, double aLon);
+
+    void SetFilteredContinent(std::string aFilteredContinent);
+
+    void SetFilteredCategory(std::string aFilteredCategory);
 
 private:
-    ILandmarkDBRepository& repository;
-    double ToRadians(double degree);
+    ILandmarkDBRepository& Repository;
+    double ToRadians(double aDegree);
+    LandmarkType TransformStringToType(std::string aLandmarkType);
+
+    std::string FilteredContinent = "-";
+    std::string FilteredCategory = "-";
     
     const double EARTH_RADIUS_KM = 6371.0;
 };

@@ -3,41 +3,76 @@
 
 #include "LandmarkService.h"
 
-LandmarkService::LandmarkService(ILandmarkDBRepository& repo) : repository(repo) {}
+LandmarkService::LandmarkService(ILandmarkDBRepository& repo) : Repository(repo)
+{
 
-double LandmarkService::ToRadians(double degree) {
-    return degree * (3.14159265358979323846 / 180.0);
 }
 
-double LandmarkService::CalculateHaversine(double lat1, double lon1, double lat2, double lon2) {
-    double dLat = ToRadians(lat2 - lat1);
-    double dLon = ToRadians(lon2 - lon1);
+double LandmarkService::ToRadians(double aDegree)
+{
+    return aDegree * (3.14159265358979323846 / 180.0);
+}
+
+double LandmarkService::CalculateHaversine(double aLatLocation1, double aLonLocation1, double aLatLocation2, double aLonLocation2)
+{
+    double dLat = ToRadians(aLatLocation2 - aLatLocation1);
+    double dLon = ToRadians(aLonLocation2 - aLonLocation1);
 
     double a = std::sin(dLat / 2.0) * std::sin(dLat / 2.0) +
-               std::cos(ToRadians(lat1)) * std::cos(ToRadians(lat2)) *
+               std::cos(ToRadians(aLatLocation1)) * std::cos(ToRadians(aLatLocation2)) *
                std::sin(dLon / 2.0) * std::sin(dLon / 2.0);
 
     double c = 2.0 * std::atan2(std::sqrt(a), std::sqrt(1.0 - a));
     return EARTH_RADIUS_KM * c;
+
+    // usar strategia en un futuro
 }
 
-std::vector<Landmark> LandmarkService::GetProcessedLandmarks(
-    double userLat, 
-    double userLon, 
-    const std::string& continentFilter) 
+LandmarkType LandmarkService::TransformStringToType(std::string aLandmarkType)
 {
-    auto allLandmarks = repository.GetAllLandmarks();
-    std::vector<Landmark> filteredResults;
+    if(aLandmarkType == "Monumento")
+    {
+        return LandmarkType::MONUMENT;
+    }
+    else if(aLandmarkType == "Natural")
+    {
+        return LandmarkType::NATURALWONDER;
+    }
+    else
+    {
+        return LandmarkType::NONE;
+    }
+}
 
-    for (auto& CurrentLandmark : allLandmarks)
+std::vector<Landmark> LandmarkService::GetProcessedLandmarks(double aLat, double aLon) 
+{
+    auto AllLandmarks = Repository.GetAllLandmarks();
+    std::vector<Landmark> FilteredResults;
+
+    for (auto& CurrentLandmark : AllLandmarks)
     {    
-        if (continentFilter != "-" && CurrentLandmark.Continent != continentFilter)
+        if (FilteredContinent != "-" && CurrentLandmark.Continent != FilteredContinent)
+        {
+            continue;
+        }
+
+        if (FilteredCategory != "-" && CurrentLandmark.Type != TransformStringToType(FilteredCategory))
         {
             continue;
         }
         
-        filteredResults.push_back(CurrentLandmark);
+        FilteredResults.push_back(CurrentLandmark);
     }
 
-    return filteredResults;
+    return FilteredResults;
+}
+
+void LandmarkService::SetFilteredCategory(std::string aFilteredCategory)
+{
+    FilteredCategory = aFilteredCategory;
+}
+
+void LandmarkService::SetFilteredContinent(std::string aFilteredContinent)
+{
+    FilteredContinent = aFilteredContinent;
 }

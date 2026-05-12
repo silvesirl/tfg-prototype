@@ -2,6 +2,7 @@
 #include "json.hpp"
 #include "httplib.h"
 #include "Landmark.h"
+#include "DistanceMetric.h"
 #include "LandmarkService.h"
 #include "LandmarkController.h"
 
@@ -28,23 +29,20 @@ void LandmarkController::RegisterRoutes()
 
     Server.Post("/calculate", [this](const httplib::Request& Request, httplib::Response& Response)
     {
-        std::cout << "1. He entrado en la lambda" << std::endl;
-
         JsonParser RequestData = JsonParser::parse(Request.body);
         
-        double lat = RequestData.at("lat").get<double>();
-        double lon = RequestData.at("lon").get<double>();
-        std::string continent = RequestData.value("continent", "-");
+        double Lat = RequestData.at("lat").get<double>();
+        double Lon = RequestData.at("lon").get<double>();
 
-        std::cout << "Request recibida: lat " << lat << " lon " << lon << std::endl;
+        std::cout << "Request recibida: lat " << Lat << " lon " << Lon << std::endl;
 
-        auto Landmarks = Service->GetProcessedLandmarks(lat, lon, continent);
+        auto Landmarks = Service->GetProcessedLandmarks(Lat, Lon);
 
         JsonParser ResponseList = JsonParser::array();
 
         for(const auto& CurrentLandmark : Landmarks)
         {
-            auto Distance = Service->CalculateHaversine(lat, lon, CurrentLandmark.Lat, CurrentLandmark.Lon);
+            auto Distance = Service->CalculateHaversine(Lat, Lon, CurrentLandmark.Lat, CurrentLandmark.Lon);
 
             JsonParser LandMarkObject;
             LandMarkObject["name"] = CurrentLandmark.Name;
@@ -60,5 +58,82 @@ void LandmarkController::RegisterRoutes()
         }
 
         Response.set_content(ResponseList.dump(), "application/json");
+    });
+
+    Server.Post("/changecontinent", [this](const httplib::Request& Request, httplib::Response& Response)
+    {
+        nlohmann::json RequestData = nlohmann::json::parse(Request.body);
+
+        std::string SelectedContinent = RequestData.value("continent", "-");
+        
+        Service->SetFilteredContinent(SelectedContinent);
+
+        std::cout << "Filtro de continente actualizado a: " << SelectedContinent << std::endl;
+
+        nlohmann::json JsonResponse;
+        JsonResponse["status"] = "success";
+
+        Response.set_content(JsonResponse.dump(), "application/json");
+    });
+
+    Server.Post("/changecategory", [this](const httplib::Request& Request, httplib::Response& Response)
+    {
+        nlohmann::json RequestData = nlohmann::json::parse(Request.body);
+
+        std::string SelectedCategory = RequestData.value("category", "-");
+        
+        Service->SetFilteredCategory(SelectedCategory);
+
+        std::cout << "Filtro de categoria actualizado a: " << SelectedCategory << std::endl;
+
+        nlohmann::json JsonResponse;
+        JsonResponse["status"] = "success";
+
+        Response.set_content(JsonResponse.dump(), "application/json");
+    });
+
+    Server.Post("/changekm", [](const httplib::Request& Request, httplib::Response& Response)
+    {
+        bool Return;
+
+        nlohmann::json JsonResponse;
+
+        JsonResponse["metric"] = "Kilometers";
+
+        std::cout << "Cambiada metrica de distancia a " << JsonResponse["metric"] << std::endl;
+
+        //DistanceMetricChosen = DistanceMetric::KILOMETERS;
+
+        Response.set_content(JsonResponse.dump(), "application/json");
+    });
+
+    Server.Post("/changemiles", [](const httplib::Request& Request, httplib::Response& Response)
+    {
+        bool Return;
+
+        nlohmann::json JsonResponse;
+
+        JsonResponse["metric"] = "Miles";
+
+        std::cout << "Cambiada metrica de distancia a " << JsonResponse["metric"] << std::endl;
+
+        //DistanceMetricChosen = DistanceMetric::MILES;
+
+        Response.set_content(JsonResponse.dump(), "application/json");
+    });
+
+    Server.Post("/changefoot", [](const httplib::Request& Request, httplib::Response& Response)
+    {
+        bool Return;
+
+        nlohmann::json JsonResponse;
+
+        JsonResponse["metric"] = "Feet";
+
+        std::cout << "Cambiada metrica de distancia a " << JsonResponse["metric"] << std::endl;
+
+        //DistanceMetricChosen = DistanceMetric::FOOT;
+
+        Response.set_content(JsonResponse.dump(), "application/json");
     });
 }
