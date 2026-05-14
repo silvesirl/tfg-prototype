@@ -2,17 +2,12 @@
 #include <cmath>
 
 #include "Landmark.h"
-#include "DistanceMetric.h"
-#include "Utils/json.hpp"
 #include "httplib.h"
-#include "Utils/GlobalConstants.h"
 
 #include "LandmarkController.h"
 #include "LandmarkService.h"
 #include "ILandmarkDBRepository.h"
 #include "SQLiteLandmarkRepository.h"
-
-using JsonParser = nlohmann::json;
 
 std::vector<Landmark> LandmarkList;
 
@@ -30,8 +25,8 @@ int main()
 
     LController.RegisterRoutes();
 
-    std::cout << "Servidor escuchando en http://localhost:18080..." << std::endl;
-    Server.listen("0.0.0.0", SERVER_PORT);
+    std::cout << "Servidor listening to http://localhost:18080..." << std::endl;
+    Server.listen("0.0.0.0", 18080);
 
     return 0;
 }

@@ -3,7 +3,7 @@
 
 #include "LandmarkService.h"
 
-LandmarkService::LandmarkService(ILandmarkDBRepository& repo) : Repository(repo)
+LandmarkService::LandmarkService(ILandmarkDBRepository& Repo) : Repository(Repo)
 {
     SetHaversideStrategy(std::make_unique<HaversideKilometerAlgorithm>());
 }
@@ -39,7 +39,7 @@ LandmarkType LandmarkService::TransformStringToType(std::string aLandmarkType)
     }
 }
 
-std::vector<Landmark> LandmarkService::GetProcessedLandmarks(double aLat, double aLon) 
+std::vector<Landmark> LandmarkService::GetProcessedLandmarks() 
 {
     auto AllLandmarks = Repository.GetAllLandmarks();
     std::vector<Landmark> FilteredResults;

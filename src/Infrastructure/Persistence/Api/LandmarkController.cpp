@@ -40,9 +40,9 @@ void LandmarkController::RegisterRoutes()
 
         Landmark CurrentPosition = {"", Lat, Lon};
 
-        std::cout << "Request recibida: lat " << Lat << " lon " << Lon << std::endl;
+        std::cout << "Request recieved: lat " << Lat << " lon " << Lon << std::endl;
 
-        auto Landmarks = Service->GetProcessedLandmarks(Lat, Lon);
+        auto Landmarks = Service->GetProcessedLandmarks();
 
         JsonParser ResponseList = JsonParser::array();
 
@@ -74,7 +74,7 @@ void LandmarkController::RegisterRoutes()
         
         Service->SetFilteredContinent(SelectedContinent);
 
-        std::cout << "Filtro de continente actualizado a: " << SelectedContinent << std::endl;
+        std::cout << "Continent filter updated to: " << SelectedContinent << std::endl;
 
         nlohmann::json JsonResponse;
         JsonResponse["status"] = "success";
@@ -90,7 +90,7 @@ void LandmarkController::RegisterRoutes()
         
         Service->SetFilteredCategory(SelectedCategory);
 
-        std::cout << "Filtro de categoria actualizado a: " << SelectedCategory << std::endl;
+        std::cout << "Category filter updated to: " << SelectedCategory << std::endl;
 
         nlohmann::json JsonResponse;
         JsonResponse["status"] = "success";
@@ -106,7 +106,7 @@ void LandmarkController::RegisterRoutes()
 
         JsonResponse["metric"] = "Kilometers";
 
-        std::cout << "Cambiada metrica de distancia a " << JsonResponse["metric"] << std::endl;
+        std::cout << "Distance metric changed to " << JsonResponse["metric"] << std::endl;
 
         Service->SetHaversideStrategy(std::make_unique<HaversideKilometerAlgorithm>());
 
@@ -121,7 +121,7 @@ void LandmarkController::RegisterRoutes()
 
         JsonResponse["metric"] = "Miles";
 
-        std::cout << "Cambiada metrica de distancia a " << JsonResponse["metric"] << std::endl;
+        std::cout << "Distance metric changed to " << JsonResponse["metric"] << std::endl;
 
         Service->SetHaversideStrategy(std::make_unique<HaversideMilesAlgorithm>());
 
@@ -136,7 +136,7 @@ void LandmarkController::RegisterRoutes()
 
         JsonResponse["metric"] = "Feet";
 
-        std::cout << "Cambiada metrica de distancia a " << JsonResponse["metric"] << std::endl;
+        std::cout << "Distance metric changed to " << JsonResponse["metric"] << std::endl;
 
         Service->SetHaversideStrategy(std::make_unique<HaversideFeetAlgorithm>());
 
