@@ -1,10 +1,11 @@
+#pragma once
 #include "IHaversideAlgorithmStrategy.h"
 
 class HaversideMilesAlgorithm : public IHaversideAlgorithmStrategy
 {
 public:
 
-    double CalculateDistance(Landmark aCurrentLandmark, Landmark aMappedLandmark);
+    double CalculateDistance(const Landmark aCurrentLandmark, const Landmark aMappedLandmark) const override;
 
 private:
 

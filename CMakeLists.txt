@@ -8,6 +8,9 @@ add_library(sqlite_lib STATIC src/Infrastructure/Persistence/sqlite3.c)
 add_executable(geospatial_api 
     main.cpp 
     src/Core/Domain/Application/LandmarkService.cpp
+    src/Core/Domain/HaversideAlgorithms/HaversideKilometerAlgorithm.cpp
+    src/Core/Domain/HaversideAlgorithms/HaversideMilesAlgorithm.cpp
+    src/Core/Domain/HaversideAlgorithms/HaversideFeetAlgorithm.cpp
     src/Infrastructure/Persistence/Api/LandmarkController.cpp
     src/Infrastructure/Persistence/SQLiteLandmarkRepository.cpp
 )
@@ -22,6 +25,7 @@ target_include_directories(geospatial_api PRIVATE
     src/Core/Domain
     src/Core/Ports
     src/Core/Domain/Application
+    src/Core/Domain/HaversideAlgorithms
     src/Infrastructure/Persistence
     src/Infrastructure/Persistence/Api
 )

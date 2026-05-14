@@ -2,9 +2,9 @@
 #include <cmath>
 
 #include "IHaversideAlgorithmStrategy.h"
-#include "HaversideMilesAlgorithm.h"
+#include "HaversideKilometerAlgorithm.h"
 
-double HaversideMilesAlgorithm::CalculateDistance(Landmark aCurrentLandmark, Landmark aMappedLandmark)
+double HaversideKilometerAlgorithm::CalculateDistance(const Landmark aCurrentLandmark, const Landmark aMappedLandmark) const
 {
     auto ToRadians = [this](double degree) -> double
     { 
@@ -20,7 +20,7 @@ double HaversideMilesAlgorithm::CalculateDistance(Landmark aCurrentLandmark, Lan
 
     double AngularDistanceRadians = 2.0 * std::atan2(std::sqrt(ChordLengthSq), std::sqrt(1.0 - ChordLengthSq));
 
-    double Distance = EARTH_RADIUS_MILES * AngularDistanceRadians;
+    double Distance = EARTH_RADIUS_KM * AngularDistanceRadians;
 
     return Distance;
 }

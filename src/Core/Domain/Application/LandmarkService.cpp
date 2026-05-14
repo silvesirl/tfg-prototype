@@ -5,7 +5,7 @@
 
 LandmarkService::LandmarkService(ILandmarkDBRepository& repo) : Repository(repo)
 {
-
+    SetHaversideStrategy(std::make_unique<HaversideKilometerAlgorithm>());
 }
 
 double LandmarkService::ToRadians(double aDegree)
@@ -13,19 +13,14 @@ double LandmarkService::ToRadians(double aDegree)
     return aDegree * (3.14159265358979323846 / 180.0);
 }
 
-double LandmarkService::CalculateHaversine(double aLatLocation1, double aLonLocation1, double aLatLocation2, double aLonLocation2)
+void LandmarkService::SetHaversideStrategy(std::unique_ptr<IHaversideAlgorithmStrategy> aStrategy)
 {
-    double dLat = ToRadians(aLatLocation2 - aLatLocation1);
-    double dLon = ToRadians(aLonLocation2 - aLonLocation1);
+    this->HaversideStrategy = std::move(aStrategy);
+}
 
-    double a = std::sin(dLat / 2.0) * std::sin(dLat / 2.0) +
-               std::cos(ToRadians(aLatLocation1)) * std::cos(ToRadians(aLatLocation2)) *
-               std::sin(dLon / 2.0) * std::sin(dLon / 2.0);
-
-    double c = 2.0 * std::atan2(std::sqrt(a), std::sqrt(1.0 - a));
-    return EARTH_RADIUS_KM * c;
-
-    // usar strategia en un futuro
+double LandmarkService::CalculateHaversine(Landmark aLocation1, Landmark aLocation2)
+{
+    return this->HaversideStrategy->CalculateDistance(aLocation1, aLocation2);
 }
 
 LandmarkType LandmarkService::TransformStringToType(std::string aLandmarkType)

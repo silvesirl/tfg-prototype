@@ -1,5 +1,5 @@
 #pragma once
-#include "../Landmark.h"
+#include "Landmark.h"
 #include <numbers>
 
 class IHaversideAlgorithmStrategy
@@ -7,5 +7,5 @@ class IHaversideAlgorithmStrategy
 public:
     virtual ~IHaversideAlgorithmStrategy() = default;
 
-    virtual double CalculateDistance(const Landmark& aCurrentLandmark, const Landmark& aMappedLandmark) const = 0;
+    virtual double CalculateDistance(const Landmark aCurrentLandmark, const Landmark aMappedLandmark) const = 0;
 };

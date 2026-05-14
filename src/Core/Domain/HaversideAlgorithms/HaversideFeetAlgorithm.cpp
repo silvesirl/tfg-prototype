@@ -4,7 +4,7 @@
 #include "IHaversideAlgorithmStrategy.h"
 #include "HaversideFeetAlgorithm.h"
 
-double HaversideFeetAlgorithm::CalculateDistance(Landmark aCurrentLandmark, Landmark aMappedLandmark)
+double HaversideFeetAlgorithm::CalculateDistance(const Landmark aCurrentLandmark, const Landmark aMappedLandmark) const
 {
     auto ToRadians = [this](double degree) -> double
     { 

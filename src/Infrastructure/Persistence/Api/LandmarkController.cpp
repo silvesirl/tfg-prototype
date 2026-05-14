@@ -6,6 +6,10 @@
 #include "LandmarkService.h"
 #include "LandmarkController.h"
 
+#include "HaversideKilometerAlgorithm.h"
+#include "HaversideMilesAlgorithm.h"
+#include "HaversideFeetAlgorithm.h"
+
 using JsonParser = nlohmann::json;
 
 LandmarkController::LandmarkController(httplib::Server& s, std::shared_ptr<LandmarkService> svc) 
@@ -34,6 +38,8 @@ void LandmarkController::RegisterRoutes()
         double Lat = RequestData.at("lat").get<double>();
         double Lon = RequestData.at("lon").get<double>();
 
+        Landmark CurrentPosition = {"", Lat, Lon};
+
         std::cout << "Request recibida: lat " << Lat << " lon " << Lon << std::endl;
 
         auto Landmarks = Service->GetProcessedLandmarks(Lat, Lon);
@@ -42,7 +48,7 @@ void LandmarkController::RegisterRoutes()
 
         for(const auto& CurrentLandmark : Landmarks)
         {
-            auto Distance = Service->CalculateHaversine(Lat, Lon, CurrentLandmark.Lat, CurrentLandmark.Lon);
+            auto Distance = Service->CalculateHaversine(CurrentPosition, CurrentLandmark);
 
             JsonParser LandMarkObject;
             LandMarkObject["name"] = CurrentLandmark.Name;
@@ -92,7 +98,7 @@ void LandmarkController::RegisterRoutes()
         Response.set_content(JsonResponse.dump(), "application/json");
     });
 
-    Server.Post("/changekm", [](const httplib::Request& Request, httplib::Response& Response)
+    Server.Post("/changekm", [this](const httplib::Request& Request, httplib::Response& Response)
     {
         bool Return;
 
@@ -102,12 +108,12 @@ void LandmarkController::RegisterRoutes()
 
         std::cout << "Cambiada metrica de distancia a " << JsonResponse["metric"] << std::endl;
 
-        //DistanceMetricChosen = DistanceMetric::KILOMETERS;
+        Service->SetHaversideStrategy(std::make_unique<HaversideKilometerAlgorithm>());
 
         Response.set_content(JsonResponse.dump(), "application/json");
     });
 
-    Server.Post("/changemiles", [](const httplib::Request& Request, httplib::Response& Response)
+    Server.Post("/changemiles", [this](const httplib::Request& Request, httplib::Response& Response)
     {
         bool Return;
 
@@ -117,12 +123,12 @@ void LandmarkController::RegisterRoutes()
 
         std::cout << "Cambiada metrica de distancia a " << JsonResponse["metric"] << std::endl;
 
-        //DistanceMetricChosen = DistanceMetric::MILES;
+        Service->SetHaversideStrategy(std::make_unique<HaversideMilesAlgorithm>());
 
         Response.set_content(JsonResponse.dump(), "application/json");
     });
 
-    Server.Post("/changefoot", [](const httplib::Request& Request, httplib::Response& Response)
+    Server.Post("/changefoot", [this](const httplib::Request& Request, httplib::Response& Response)
     {
         bool Return;
 
@@ -132,7 +138,7 @@ void LandmarkController::RegisterRoutes()
 
         std::cout << "Cambiada metrica de distancia a " << JsonResponse["metric"] << std::endl;
 
-        //DistanceMetricChosen = DistanceMetric::FOOT;
+        Service->SetHaversideStrategy(std::make_unique<HaversideFeetAlgorithm>());
 
         Response.set_content(JsonResponse.dump(), "application/json");
     });
