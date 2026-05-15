@@ -1,10 +1,10 @@
 #include <numbers>
 #include <cmath>
 
-#include "IHaversideAlgorithmStrategy.h"
-#include "HaversideFeetAlgorithm.h"
+#include "IHaversineAlgorithmStrategy.h"
+#include "HaversineFeetAlgorithm.h"
 
-double HaversideFeetAlgorithm::CalculateDistance(const Landmark aCurrentLandmark, const Landmark aMappedLandmark) const
+double HaversineFeetAlgorithm::CalculateDistance(const Landmark aCurrentLandmark, const Landmark aMappedLandmark) const
 {
     auto ToRadians = [this](double degree) -> double
     { 

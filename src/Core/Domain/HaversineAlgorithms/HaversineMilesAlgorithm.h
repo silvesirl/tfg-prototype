@@ -1,12 +1,12 @@
 #pragma once
-#include "IHaversideAlgorithmStrategy.h"
+#include "IHaversineAlgorithmStrategy.h"
 
-class HaversideMilesAlgorithm : public IHaversideAlgorithmStrategy
+class HaversineMilesAlgorithm : public IHaversineAlgorithmStrategy
 {
 public:
 
     /**
-    * @copydoc IHaversideAlgorithmStrategy::CalculateDistance
+    * @copydoc IHaversineAlgorithmStrategy::CalculateDistance
     */
     double CalculateDistance(const Landmark aCurrentLandmark, const Landmark aMappedLandmark) const override;
 

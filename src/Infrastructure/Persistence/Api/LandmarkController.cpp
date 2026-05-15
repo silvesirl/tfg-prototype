@@ -6,9 +6,9 @@
 #include "LandmarkService.h"
 #include "LandmarkController.h"
 
-#include "HaversideKilometerAlgorithm.h"
-#include "HaversideMilesAlgorithm.h"
-#include "HaversideFeetAlgorithm.h"
+#include "HaversineKilometerAlgorithm.h"
+#include "HaversineMilesAlgorithm.h"
+#include "HaversineFeetAlgorithm.h"
 
 using JsonParser = nlohmann::json;
 
@@ -108,7 +108,7 @@ void LandmarkController::RegisterRoutes()
 
         std::cout << "Distance metric changed to " << JsonResponse["metric"] << std::endl;
 
-        Service->SetHaversideStrategy(std::make_unique<HaversideKilometerAlgorithm>());
+        Service->SetHaversineStrategy(std::make_unique<HaversineKilometerAlgorithm>());
 
         Response.set_content(JsonResponse.dump(), "application/json");
     });
@@ -123,7 +123,7 @@ void LandmarkController::RegisterRoutes()
 
         std::cout << "Distance metric changed to " << JsonResponse["metric"] << std::endl;
 
-        Service->SetHaversideStrategy(std::make_unique<HaversideMilesAlgorithm>());
+        Service->SetHaversineStrategy(std::make_unique<HaversineMilesAlgorithm>());
 
         Response.set_content(JsonResponse.dump(), "application/json");
     });
@@ -138,7 +138,7 @@ void LandmarkController::RegisterRoutes()
 
         std::cout << "Distance metric changed to " << JsonResponse["metric"] << std::endl;
 
-        Service->SetHaversideStrategy(std::make_unique<HaversideFeetAlgorithm>());
+        Service->SetHaversineStrategy(std::make_unique<HaversineFeetAlgorithm>());
 
         Response.set_content(JsonResponse.dump(), "application/json");
     });

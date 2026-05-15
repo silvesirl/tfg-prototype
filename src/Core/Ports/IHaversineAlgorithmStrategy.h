@@ -2,10 +2,10 @@
 #include "Landmark.h"
 #include <numbers>
 
-class IHaversideAlgorithmStrategy
+class IHaversineAlgorithmStrategy
 {
 public:
-    virtual ~IHaversideAlgorithmStrategy() = default;
+    virtual ~IHaversineAlgorithmStrategy() = default;
 
     /**
     * @brief Calculates the distance between two geographic points. 

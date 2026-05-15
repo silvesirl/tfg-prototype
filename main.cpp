@@ -25,7 +25,7 @@ int main()
 
     LController.RegisterRoutes();
 
-    std::cout << "Servidor listening to http://localhost:18080..." << std::endl;
+    std::cout << "Server listening to http://localhost:18080..." << std::endl;
     Server.listen("0.0.0.0", 18080);
 
     return 0;

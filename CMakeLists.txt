@@ -3,14 +3,14 @@ project(GeospatialAPI LANGUAGES CXX C)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_library(sqlite_lib STATIC src/Infrastructure/Persistence/sqlite3.c)
+add_library(sqlite_lib STATIC Third-party/sqlite3.c)
 
 add_executable(geospatial_api 
     main.cpp 
-    src/Core/Domain/Application/LandmarkService.cpp
-    src/Core/Domain/HaversideAlgorithms/HaversideKilometerAlgorithm.cpp
-    src/Core/Domain/HaversideAlgorithms/HaversideMilesAlgorithm.cpp
-    src/Core/Domain/HaversideAlgorithms/HaversideFeetAlgorithm.cpp
+    src/Core/Application/LandmarkService.cpp
+    src/Core/Domain/HaversineAlgorithms/HaversineKilometerAlgorithm.cpp
+    src/Core/Domain/HaversineAlgorithms/HaversineMilesAlgorithm.cpp
+    src/Core/Domain/HaversineAlgorithms/HaversineFeetAlgorithm.cpp
     src/Infrastructure/Persistence/Api/LandmarkController.cpp
     src/Infrastructure/Persistence/SQLiteLandmarkRepository.cpp
 )
@@ -21,11 +21,12 @@ add_custom_command(TARGET geospatial_api POST_BUILD
         "$<TARGET_FILE_DIR:geospatial_api>/DB"
 )
 
-target_include_directories(geospatial_api PRIVATE 
+target_include_directories(geospatial_api PRIVATE
+    Third-party
     src/Core/Domain
     src/Core/Ports
-    src/Core/Domain/Application
-    src/Core/Domain/HaversideAlgorithms
+    src/Core/Application
+    src/Core/Domain/HaversineAlgorithms
     src/Infrastructure/Persistence
     src/Infrastructure/Persistence/Api
 )

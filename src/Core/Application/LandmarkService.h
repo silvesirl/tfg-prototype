@@ -5,10 +5,10 @@
 #include <string>
 #include "Landmark.h"
 #include "ILandmarkDBRepository.h"
-#include "IHaversideAlgorithmStrategy.h"
-#include "HaversideKilometerAlgorithm.h"
-#include "HaversideMilesAlgorithm.h"
-#include "HaversideFeetAlgorithm.h"
+#include "IHaversineAlgorithmStrategy.h"
+#include "HaversineKilometerAlgorithm.h"
+#include "HaversineMilesAlgorithm.h"
+#include "HaversineFeetAlgorithm.h"
 
 class LandmarkService
 {
@@ -46,10 +46,10 @@ public:
     void SetFilteredCategory(std::string aFilteredCategory);
 
     /**
-    * @brief sets the desired strategy to follow with the haverside algorithm.
+    * @brief sets the desired strategy to follow with the haversine algorithm.
     * @param aStrategy strategy to follow when calculating distances.
     */
-    void SetHaversideStrategy(std::unique_ptr<IHaversideAlgorithmStrategy> aStrategy);
+    void SetHaversineStrategy(std::unique_ptr<IHaversineAlgorithmStrategy> aStrategy);
 
 private:
 
@@ -68,7 +68,7 @@ private:
     LandmarkType TransformStringToType(std::string aLandmarkType);
 
 
-    std::unique_ptr<IHaversideAlgorithmStrategy> HaversideStrategy; //!<haversidestrategy chosen.
+    std::unique_ptr<IHaversineAlgorithmStrategy> HaversineStrategy; //!<haversinestrategy chosen.
     ILandmarkDBRepository& Repository;                              //!<repository to access the landmarks.
     std::string FilteredContinent = "-";                            //!<filter in place for continent.
     std::string FilteredCategory = "-";                             //!<filter in place for categories.
