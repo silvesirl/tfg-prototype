@@ -3,16 +3,25 @@ project(GeospatialAPI LANGUAGES CXX C)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_library(sqlite_lib STATIC Third-party/sqlite3.c)
+include_directories(
+    "${CMAKE_CURRENT_SOURCE_DIR}/Third-party"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/Core/Domain"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/Core/Ports"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/Core/Application"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/Core/Domain/HaversineAlgorithms"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/Infrastructure/Persistence"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/Infrastructure/Persistence/Api"
+)
 
-add_executable(geospatial_api 
-    main.cpp 
-    src/Core/Application/LandmarkService.cpp
-    src/Core/Domain/HaversineAlgorithms/HaversineKilometerAlgorithm.cpp
-    src/Core/Domain/HaversineAlgorithms/HaversineMilesAlgorithm.cpp
-    src/Core/Domain/HaversineAlgorithms/HaversineFeetAlgorithm.cpp
-    src/Infrastructure/Persistence/Api/LandmarkController.cpp
-    src/Infrastructure/Persistence/SQLiteLandmarkRepository.cpp
+add_subdirectory(Third-party)
+add_subdirectory(src)
+
+add_executable(geospatial_api main.cpp)
+
+target_link_libraries(geospatial_api PRIVATE 
+    core_lib 
+    infrastructure_lib 
+    sqlite_lib
 )
 
 add_custom_command(TARGET geospatial_api POST_BUILD
@@ -20,15 +29,3 @@ add_custom_command(TARGET geospatial_api POST_BUILD
         "${CMAKE_CURRENT_SOURCE_DIR}/DB"
         "$<TARGET_FILE_DIR:geospatial_api>/DB"
 )
-
-target_include_directories(geospatial_api PRIVATE
-    Third-party
-    src/Core/Domain
-    src/Core/Ports
-    src/Core/Application
-    src/Core/Domain/HaversineAlgorithms
-    src/Infrastructure/Persistence
-    src/Infrastructure/Persistence/Api
-)
-
-target_link_libraries(geospatial_api PRIVATE sqlite_lib)
