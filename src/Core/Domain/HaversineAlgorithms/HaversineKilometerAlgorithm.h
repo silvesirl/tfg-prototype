@@ -3,14 +3,15 @@
 
 class HaversineKilometerAlgorithm : public IHaversineAlgorithmStrategy
 {
-public:
-
+protected:
     /**
-    * @copydoc IHaversineAlgorithmStrategy::CalculateDistance
+    * @copydoc IHaversineAlgorithmStrategy::GetEarthRadius
     */
-    double CalculateDistance(const Landmark aCurrentLandmark, const Landmark aMappedLandmark) const override;
+    virtual double GetEarthRadius() const override
+    {
+        return EARTH_RADIUS_KM;
+    };
 
 private:
-
     const double EARTH_RADIUS_KM = 6371.0;                          //!< Earth radius for kilometers.
 };

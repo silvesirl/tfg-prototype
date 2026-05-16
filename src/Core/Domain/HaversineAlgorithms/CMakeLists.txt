@@ -1,5 +1,5 @@
 target_sources(core_lib PRIVATE
-    HaversineKilometerAlgorithm.cpp
-    HaversineMilesAlgorithm.cpp
-    HaversineFeetAlgorithm.cpp
+    HaversineKilometerAlgorithm.h
+    HaversineMilesAlgorithm.h
+    HaversineFeetAlgorithm.h
 )

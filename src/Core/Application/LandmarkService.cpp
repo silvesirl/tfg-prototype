@@ -1,4 +1,5 @@
 #include <cmath>
+#include <numbers>
 #include <algorithm>
 
 #include "LandmarkService.h"
@@ -6,11 +7,6 @@
 LandmarkService::LandmarkService(ILandmarkDBRepository& Repo) : Repository(Repo)
 {
     SetHaversineStrategy(std::make_unique<HaversineKilometerAlgorithm>());
-}
-
-double LandmarkService::ToRadians(double aDegree)
-{
-    return aDegree * (3.14159265358979323846 / 180.0);
 }
 
 void LandmarkService::SetHaversineStrategy(std::unique_ptr<IHaversineAlgorithmStrategy> aStrategy)
@@ -21,22 +17,6 @@ void LandmarkService::SetHaversineStrategy(std::unique_ptr<IHaversineAlgorithmSt
 double LandmarkService::CalculateHaversine(Landmark aLocation1, Landmark aLocation2)
 {
     return this->HaversineStrategy->CalculateDistance(aLocation1, aLocation2);
-}
-
-LandmarkType LandmarkService::TransformStringToType(std::string aLandmarkType)
-{
-    if(aLandmarkType == "Monumento")
-    {
-        return LandmarkType::MONUMENT;
-    }
-    else if(aLandmarkType == "Natural")
-    {
-        return LandmarkType::NATURALWONDER;
-    }
-    else
-    {
-        return LandmarkType::NONE;
-    }
 }
 
 std::vector<Landmark> LandmarkService::GetProcessedLandmarks() 
@@ -51,7 +31,7 @@ std::vector<Landmark> LandmarkService::GetProcessedLandmarks()
             continue;
         }
 
-        if (FilteredCategory != "-" && CurrentLandmark.Type != TransformStringToType(FilteredCategory))
+        if (FilteredCategory != "-" && CurrentLandmark.Type != LandmarkFilterCategoryMapper::LandmarkFilterCategoryMapper(FilteredCategory))
         {
             continue;
         }

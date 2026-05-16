@@ -9,6 +9,7 @@
 #include "HaversineKilometerAlgorithm.h"
 #include "HaversineMilesAlgorithm.h"
 #include "HaversineFeetAlgorithm.h"
+#include "Mappers/LandmarkFilterCategoryMapper.h"
 
 class LandmarkService
 {
@@ -52,22 +53,6 @@ public:
     void SetHaversineStrategy(std::unique_ptr<IHaversineAlgorithmStrategy> aStrategy);
 
 private:
-
-    /**
-    * @brief Pass a number into radias
-    * @param aDegree degreees to convert to radians.
-    * @return the radians.
-    */
-    double ToRadians(double aDegree);
-
-    /**
-    * @brief transform the type of landmark in string.
-    * @param aLandmarkType type to convert.
-    * @return type converted.
-    */
-    LandmarkType TransformStringToType(std::string aLandmarkType);
-
-
     std::unique_ptr<IHaversineAlgorithmStrategy> HaversineStrategy; //!<haversinestrategy chosen.
     ILandmarkDBRepository& Repository;                              //!<repository to access the landmarks.
     std::string FilteredContinent = "-";                            //!<filter in place for continent.

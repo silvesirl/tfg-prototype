@@ -3,14 +3,15 @@
 
 class HaversineFeetAlgorithm : public IHaversineAlgorithmStrategy
 {
-public:
-
+protected:
     /**
-    * @copydoc IHaversineAlgorithmStrategy::CalculateDistance
+    * @copydoc IHaversineAlgorithmStrategy::GetEarthRadius
     */
-    double CalculateDistance(const Landmark aCurrentLandmark, const Landmark aMappedLandmark) const override;
+    virtual double GetEarthRadius() const override
+    {
+        return EARTH_RADIUS_FEET;
+    };
 
 private:
-
     const double EARTH_RADIUS_FEET = 20902231.0;                    //!< Earth radius for feet.
 };
