@@ -21,30 +21,12 @@ double LandmarkService::CalculateHaversine(Landmark aLocation1, Landmark aLocati
 
 std::vector<Landmark> LandmarkService::GetProcessedLandmarks() 
 {
-    auto AllLandmarks = Repository.GetAllLandmarks();
-    std::vector<Landmark> FilteredResults;
-
-    for (auto& CurrentLandmark : AllLandmarks)
-    {    
-        if (FilteredContinent != "-" && CurrentLandmark.Continent != FilteredContinent)
-        {
-            continue;
-        }
-
-        if (FilteredCategory != "-" && CurrentLandmark.Type != LandmarkFilterCategoryMapper::LandmarkFilterCategoryMapper(FilteredCategory))
-        {
-            continue;
-        }
-        
-        FilteredResults.push_back(CurrentLandmark);
-    }
-
-    return FilteredResults;
+    return Repository.GetFilteredLandmarks(FilteredContinent, FilteredType);
 }
 
-void LandmarkService::SetFilteredCategory(std::string aFilteredCategory)
+void LandmarkService::SetFilteredType(std::string aFilteredType)
 {
-    FilteredCategory = aFilteredCategory;
+    FilteredType = aFilteredType;
 }
 
 void LandmarkService::SetFilteredContinent(std::string aFilteredContinent)

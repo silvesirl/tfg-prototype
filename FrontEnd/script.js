@@ -56,8 +56,8 @@ document.addEventListener("DOMContentLoaded", async function()
     const SwitchKilometersButton = document.getElementById("ChangeKilometers");
     const SwitchMilesButton = document.getElementById("ChangeMiles");
     const SwitchFootButton = document.getElementById("ChangeFoot");
-    const ContinentDropDown = document.getElementById("Continente");
-    const CategoryDropDown = document.getElementById("Categoria");
+    const ContinentDropDown = document.getElementById("Continent");
+    const TypeDropDown = document.getElementById("Type");
     const CurrentLocationButton = document.getElementById("CurrentLocationButton");
     const LanguageDropDown = document.getElementById("Language");
 
@@ -214,17 +214,17 @@ document.addEventListener("DOMContentLoaded", async function()
         }
     });
 
-    CategoryDropDown.addEventListener("change", async function()
+    TypeDropDown.addEventListener("change", async function()
     {
-        let FilteredCategory = this.value;
+        let FilteredType = this.value;
 
-        const Response = await fetch('http://localhost:18080/changecategory',
+        const Response = await fetch('http://localhost:18080/changetype',
         {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({category: FilteredCategory})
+            body: JSON.stringify({type: FilteredType})
         });
 
         const Data = await Response.json();

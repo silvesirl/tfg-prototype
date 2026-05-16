@@ -32,8 +32,8 @@ TestEndpoint("Change Metric to Feet", "/changefoot")
 PayloadContinent = {"continent": "Europe"}
 TestEndpoint("Update Continent Filter", "/changecontinent", PayloadContinent)
 
-PayloadCategory = {"category": "Monumento"}
-TestEndpoint("Update Category Filter", "/changecategory", PayloadCategory)
+PayloadType = {"type": "monument"}
+TestEndpoint("Update Category Filter", "/changetype", PayloadType)
 
 PayloadLanguage = {"language": "ch"}
 TestEndpoint("Update Language", "/changelanguage", PayloadLanguage)

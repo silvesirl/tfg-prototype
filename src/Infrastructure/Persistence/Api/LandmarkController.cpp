@@ -5,6 +5,7 @@
 #include "DistanceMetric.h"
 #include "LandmarkService.h"
 #include "LandmarkController.h"
+#include "DomainConstants.h"
 
 #include "HaversineKilometerAlgorithm.h"
 #include "HaversineMilesAlgorithm.h"
@@ -55,7 +56,7 @@ void LandmarkController::RegisterRoutes()
             LandMarkObject["distance"] = Distance;
             LandMarkObject["lat"] = CurrentLandmark.Lat;
             LandMarkObject["lon"] = CurrentLandmark.Lon;
-            LandMarkObject["category"] = CurrentLandmark.Type;
+            LandMarkObject["type"] = CurrentLandmark.Type;
             LandMarkObject["continent"] = CurrentLandmark.Continent;
             LandMarkObject["imageurl"] = CurrentLandmark.Image;
             LandMarkObject["maplink"] = CurrentLandmark.MapsLink;
@@ -70,7 +71,7 @@ void LandmarkController::RegisterRoutes()
     {
         nlohmann::json RequestData = nlohmann::json::parse(Request.body);
 
-        std::string SelectedContinent = RequestData.value("continent", "-");
+        std::string SelectedContinent = RequestData.value("continent", std::string{DomainConstants::EMPTY_FILTER});
         
         Service->SetFilteredContinent(SelectedContinent);
 
@@ -82,15 +83,15 @@ void LandmarkController::RegisterRoutes()
         Response.set_content(JsonResponse.dump(), "application/json");
     });
 
-    Server.Post("/changecategory", [this](const httplib::Request& Request, httplib::Response& Response)
+    Server.Post("/changetype", [this](const httplib::Request& Request, httplib::Response& Response)
     {
         nlohmann::json RequestData = nlohmann::json::parse(Request.body);
 
-        std::string SelectedCategory = RequestData.value("category", "-");
+        std::string SelectedType = RequestData.value("type", std::string{DomainConstants::EMPTY_FILTER});
         
-        Service->SetFilteredCategory(SelectedCategory);
+        Service->SetFilteredType(SelectedType);
 
-        std::cout << "Category filter updated to: " << SelectedCategory << std::endl;
+        std::cout << "Type filter updated to: " << SelectedType << std::endl;
 
         nlohmann::json JsonResponse;
         JsonResponse["status"] = "success";

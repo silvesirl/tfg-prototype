@@ -9,7 +9,7 @@
 #include "HaversineKilometerAlgorithm.h"
 #include "HaversineMilesAlgorithm.h"
 #include "HaversineFeetAlgorithm.h"
-#include "Mappers/LandmarkFilterCategoryMapper.h"
+#include "DomainConstants.h"
 
 class LandmarkService
 {
@@ -41,10 +41,10 @@ public:
     void SetFilteredContinent(std::string aFilteredContinent);
 
     /**
-    * @brief sets the filter for the category.
-    * @param aFilteredCategory category to filter.
+    * @brief sets the filter for the type.
+    * @param aFilteredType type to filter.
     */
-    void SetFilteredCategory(std::string aFilteredCategory);
+    void SetFilteredType(std::string aFilteredType);
 
     /**
     * @brief sets the desired strategy to follow with the haversine algorithm.
@@ -53,8 +53,8 @@ public:
     void SetHaversineStrategy(std::unique_ptr<IHaversineAlgorithmStrategy> aStrategy);
 
 private:
-    std::unique_ptr<IHaversineAlgorithmStrategy> HaversineStrategy; //!<haversinestrategy chosen.
-    ILandmarkDBRepository& Repository;                              //!<repository to access the landmarks.
-    std::string FilteredContinent = "-";                            //!<filter in place for continent.
-    std::string FilteredCategory = "-";                             //!<filter in place for categories.
+    std::unique_ptr<IHaversineAlgorithmStrategy> HaversineStrategy;                     //!<haversinestrategy chosen.
+    ILandmarkDBRepository& Repository;                                                  //!<repository to access the landmarks.
+    std::string FilteredContinent = std::string{DomainConstants::EMPTY_FILTER};         //!<filter in place for continent.
+    std::string FilteredType = std::string{DomainConstants::EMPTY_FILTER};              //!<filter in place for categories.
 };

@@ -8,6 +8,16 @@ enum class LandmarkType
     NATURALWONDER
 };
 
+enum class LandmarkContinent
+{
+    NONE,
+    EUROPE,
+    AFRICA,
+    ASIA,
+    AMERICA,
+    OCEANIA
+};
+
 struct Landmark
 {
     std::string Name;
