@@ -33,7 +33,7 @@ PayloadContinent = {"continent": "Europe"}
 TestEndpoint("Update Continent Filter", "/changecontinent", PayloadContinent)
 
 PayloadType = {"type": "monument"}
-TestEndpoint("Update Category Filter", "/changetype", PayloadType)
+TestEndpoint("Update Type Filter", "/changetype", PayloadType)
 
 PayloadLanguage = {"language": "ch"}
 TestEndpoint("Update Language", "/changelanguage", PayloadLanguage)
