@@ -5,6 +5,7 @@
 #include "DomainConstants.h"
 #include "SQLiteLandmarkRepository.h"
 #include "Mappers/LandmarkFilterTypeMapper.h"
+#include "Mappers/LandmarkFilterContinentMapper.h"
 
 SQLiteLandmarkRepository::SQLiteLandmarkRepository() 
 {
@@ -59,13 +60,15 @@ std::vector<Landmark> SQLiteLandmarkRepository::GetFilteredLandmarks(std::string
     while (sqlite3_step(Statement) == SQLITE_ROW) 
     {
         std::string Name = reinterpret_cast<const char*>(sqlite3_column_text(Statement, 0));
-        double Latitude      = sqlite3_column_double(Statement, 1);
-        double Longitude      = sqlite3_column_double(Statement, 2);
+        double Latitude                                 = sqlite3_column_double(Statement, 1);
+        double Longitude                                = sqlite3_column_double(Statement, 2);
         
         std::string TypeStr = reinterpret_cast<const char*>(sqlite3_column_text(Statement, 3));
-        LandmarkType Type = LandmarkFilterTypeMapper::LandmarkFilterTypeMapper(TypeStr);
+        LandmarkType Type = LandmarkFilterTypeMapper::MapStringToType(TypeStr);
 
-        std::string Continent = reinterpret_cast<const char*>(sqlite3_column_text(Statement, 4));
+        std::string ContinentStr = reinterpret_cast<const char*>(sqlite3_column_text(Statement, 4));
+        LandmarkContinent Continent = LandmarkFilterContinentMapper::MapStringToType(ContinentStr);
+        
         std::string ImageUrl  = reinterpret_cast<const char*>(sqlite3_column_text(Statement, 5));
         std::string GMapsLink = reinterpret_cast<const char*>(sqlite3_column_text(Statement, 6));
 

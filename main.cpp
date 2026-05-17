@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cmath>
 #include "httplib.h"
+#include "Logger.h"
 
 // Core
 #include "Landmark.h"
@@ -10,6 +11,7 @@
 #include "LandmarkService.h"
 #include "ILandmarkDBRepository.h"
 #include "SQLiteLandmarkRepository.h"
+#include "Localization/LocalizationManager.h"
 
 // Constants
 constexpr int SERVER_PORT = 18080;
@@ -23,6 +25,8 @@ int main()
     {
         httplib::Server Server;
 
+        LocalizationManager::Initialize("Localization.xml");
+
         DBRepository = std::make_unique<SQLiteLandmarkRepository>();
 
         auto LService = std::make_shared<LandmarkService>(*DBRepository);
@@ -31,7 +35,7 @@ int main()
 
         LController.RegisterRoutes();
 
-        std::cout << "Server listening to http://" << SERVER_HOST << ":" << SERVER_PORT << "..." << std::endl;
+        Logger::Log(Logger::WarningLevel::INFO, std::format("Server listening to http:// {} : {} ...", SERVER_HOST, SERVER_PORT));
         
         if (!Server.listen(SERVER_HOST.c_str(), SERVER_PORT))
         {

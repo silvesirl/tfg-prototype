@@ -2,10 +2,15 @@
 #include "json.hpp"
 #include "httplib.h"
 #include "Landmark.h"
+#include "Language.h"
+#include "Logger.h"
 #include "DistanceMetric.h"
 #include "LandmarkService.h"
 #include "LandmarkController.h"
 #include "DomainConstants.h"
+#include "Localization/LocalizationManager.h"
+
+#include "Mappers/LandmarkFilterContinentMapper.h"
 
 #include "HaversineKilometerAlgorithm.h"
 #include "HaversineMilesAlgorithm.h"
@@ -41,7 +46,7 @@ void LandmarkController::RegisterRoutes()
 
         Landmark CurrentPosition = {"", Lat, Lon};
 
-        std::cout << "Request recieved: lat " << Lat << " lon " << Lon << std::endl;
+        Logger::Log(Logger::WarningLevel::INFO, std::format("Request received: lat {} lon {}", Lat, Lon));
 
         auto Landmarks = Service->GetProcessedLandmarks();
 
@@ -57,7 +62,7 @@ void LandmarkController::RegisterRoutes()
             LandMarkObject["lat"] = CurrentLandmark.Lat;
             LandMarkObject["lon"] = CurrentLandmark.Lon;
             LandMarkObject["type"] = CurrentLandmark.Type;
-            LandMarkObject["continent"] = CurrentLandmark.Continent;
+            LandMarkObject["continent"] = LocalizationManager::GetTranslation(std::string(LandmarkFilterContinentMapper::MapContinentToString(CurrentLandmark.Continent)));
             LandMarkObject["imageurl"] = CurrentLandmark.Image;
             LandMarkObject["maplink"] = CurrentLandmark.MapsLink;
 
@@ -74,8 +79,8 @@ void LandmarkController::RegisterRoutes()
         std::string SelectedContinent = RequestData.value("continent", std::string{DomainConstants::EMPTY_FILTER});
         
         Service->SetFilteredContinent(SelectedContinent);
-
-        std::cout << "Continent filter updated to: " << SelectedContinent << std::endl;
+        
+        Logger::Log(Logger::WarningLevel::INFO, "Continent filter updated to: " + SelectedContinent);
 
         nlohmann::json JsonResponse;
         JsonResponse["status"] = "success";
@@ -91,7 +96,7 @@ void LandmarkController::RegisterRoutes()
         
         Service->SetFilteredType(SelectedType);
 
-        std::cout << "Type filter updated to: " << SelectedType << std::endl;
+        Logger::Log(Logger::WarningLevel::INFO, "Type filter updated to: " + SelectedType);
 
         nlohmann::json JsonResponse;
         JsonResponse["status"] = "success";
@@ -106,8 +111,8 @@ void LandmarkController::RegisterRoutes()
         nlohmann::json JsonResponse;
 
         JsonResponse["metric"] = "Kilometers";
-
-        std::cout << "Distance metric changed to " << JsonResponse["metric"] << std::endl;
+        
+        Logger::Log(Logger::WarningLevel::INFO, "Distance metric changed to " + JsonResponse["metric"]);
 
         Service->SetHaversineStrategy(std::make_unique<HaversineKilometerAlgorithm>());
 
@@ -122,7 +127,7 @@ void LandmarkController::RegisterRoutes()
 
         JsonResponse["metric"] = "Miles";
 
-        std::cout << "Distance metric changed to " << JsonResponse["metric"] << std::endl;
+        Logger::Log(Logger::WarningLevel::INFO, "Distance metric changed to " + JsonResponse["metric"]);
 
         Service->SetHaversineStrategy(std::make_unique<HaversineMilesAlgorithm>());
 
@@ -137,9 +142,25 @@ void LandmarkController::RegisterRoutes()
 
         JsonResponse["metric"] = "Feet";
 
-        std::cout << "Distance metric changed to " << JsonResponse["metric"] << std::endl;
+        Logger::Log(Logger::WarningLevel::INFO, "Distance metric changed to " + JsonResponse["metric"]);
 
         Service->SetHaversineStrategy(std::make_unique<HaversineFeetAlgorithm>());
+
+        Response.set_content(JsonResponse.dump(), "application/json");
+    });
+
+    Server.Post("/changelanguage", [](const httplib::Request& Request, httplib::Response& Response)
+    {
+        nlohmann::json RequestData = nlohmann::json::parse(Request.body);
+
+        auto LanguageValue = RequestData["language"];
+
+        LocalizationManager::SetLanguage(LanguageValue);
+
+        Logger::Log(Logger::WarningLevel::INFO, "Cahnged language to " + LanguageValue);
+
+        nlohmann::json JsonResponse;
+        JsonResponse["status"] = "success";
 
         Response.set_content(JsonResponse.dump(), "application/json");
     });

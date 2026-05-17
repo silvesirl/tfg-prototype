@@ -56,5 +56,5 @@ private:
     std::unique_ptr<IHaversineAlgorithmStrategy> HaversineStrategy;                     //!<haversinestrategy chosen.
     ILandmarkDBRepository& Repository;                                                  //!<repository to access the landmarks.
     std::string FilteredContinent = std::string{DomainConstants::EMPTY_FILTER};         //!<filter in place for continent.
-    std::string FilteredType = std::string{DomainConstants::EMPTY_FILTER};              //!<filter in place for categories.
+    std::string FilteredType = std::string{DomainConstants::EMPTY_FILTER};              //!<filter in place for types.
 };

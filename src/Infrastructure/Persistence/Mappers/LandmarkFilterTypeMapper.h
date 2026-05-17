@@ -6,7 +6,12 @@ namespace LandmarkFilterTypeMapper
     inline constexpr std::string_view DB_TYPE_MONUMENT = "monument";
     inline constexpr std::string_view DB_TYPE_NATURAL = "natural";
 
-    static LandmarkType LandmarkFilterTypeMapper(std::string aTypeString)
+    /**
+    * @brief Gives the string Type in place of the corresponding enum.
+    * @param aTypeString enum to convert to string.
+    * @return The corresponding enum.
+    */
+    static LandmarkType MapStringToType(std::string aTypeString)
     {
         if(aTypeString == DB_TYPE_MONUMENT)
         {

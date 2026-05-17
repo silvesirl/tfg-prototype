@@ -1,3 +1,11 @@
 add_library(persistence_mappers INTERFACE)
 target_include_directories(persistence_mappers INTERFACE .)
-target_sources(persistence_mappers INTERFACE LandmarkPersistenceMapper.h)
+target_sources(persistence_mappers INTERFACE 
+    LanguageMapper.h
+    LandmarkFilterTypeMapper.h
+    LandmarkFilterContinentMapper.h
+)
+
+target_sources(infrastructure_lib PRIVATE
+    LanguageMapper.cpp
+)
