@@ -42,7 +42,18 @@ std::string LocalizationManager::GetTranslation(std::string aLabel)
     if (LabelNode)
     {
         std::string LanguageString = std::string(LanguageMapper::MapLanguageToString(CurrentLanguage));
-        return LabelNode.attribute(LanguageString.c_str()).as_string(aLabel.c_str());
+
+        pugi::xml_node TranslationNode = LabelNode.child(LanguageString.c_str());
+
+        if (TranslationNode)
+        {
+            std::string ReturnTranslation = TranslationNode.text().as_string(aLabel.c_str());
+            return ReturnTranslation;
+        }
+        else
+        {
+            Logger::Log(Logger::WarningLevel::WARNING, "Language node <" + LanguageString + "> not found for label " + aLabel);
+        }
     }
     else
     {

@@ -14,8 +14,8 @@ namespace LandmarkFilterContinentMapper
     };
 
     /**
-    * @brief Gives the string Continent in place of the corresponding enum.
-    * @param aContinentString enum to convert to string.
+    * @brief Gives the Continent enum in place of the corresponding string.
+    * @param aContinent string to convert to enum.
     * @return The corresponding enum.
     */
     static LandmarkContinent MapStringToType(std::string aContinentString)
@@ -31,8 +31,8 @@ namespace LandmarkFilterContinentMapper
     }
 
     /**
-    * @brief Gives the Continent enum in place of the corresponding string.
-    * @param aContinent string to convert to enum.
+    * @brief Gives the string Continent in place of the corresponding enum.
+    * @param aContinentString enum to convert to string.
     * @return The corresponding string.
     */
     static std::string_view MapContinentToString(LandmarkContinent aContinent)
@@ -45,6 +45,7 @@ namespace LandmarkFilterContinentMapper
             case LandmarkContinent::AMERICA:    return "America";
             case LandmarkContinent::OCEANIA:    return "Oceania";
             case LandmarkContinent::NONE:       return "-";
+            default:                            return "-";
         }
     }
 }
