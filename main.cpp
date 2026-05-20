@@ -5,6 +5,7 @@
 
 // Core
 #include "Landmark.h"
+#include "DistanceMetricManager.h"
 
 // Infrastructure
 #include "LandmarkController.h"
@@ -14,7 +15,7 @@
 #include "Localization/LocalizationManager.h"
 
 // Constants
-constexpr int SERVER_PORT = 18080;
+constexpr uint32_t SERVER_PORT = 18080;
 const std::string SERVER_HOST = "0.0.0.0";
 
 std::unique_ptr<ILandmarkDBRepository> DBRepository;
@@ -29,7 +30,9 @@ int main()
 
         DBRepository = std::make_unique<SQLiteLandmarkRepository>();
 
-        auto LService = std::make_shared<LandmarkService>(*DBRepository);
+        auto MetricManager = std::make_shared<DistanceMetricManager>();
+
+        auto LService = std::make_shared<LandmarkService>(*DBRepository, MetricManager);
 
         LandmarkController LController(Server, LService);
 

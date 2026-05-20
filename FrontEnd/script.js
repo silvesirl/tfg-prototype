@@ -107,15 +107,15 @@ document.addEventListener("DOMContentLoaded", async function()
             const ContinentText = GetTranslation("Frontend-Continent");
             const LinkText = GetTranslation("Frontend-Link");
             Data.forEach(Landmark => {
-                const TranslatedName = GetTranslation(Landmark.name);
+                const TranslatedName = Landmark.name;
                 const Div = document.createElement('div');
                 Div.className = 'result-item';
                 Div.innerHTML = `
-                    <b data-translate="${Landmark.name}">${TranslatedName}</b>: ${Landmark.distance.toFixed(2)} ${MetricUnit}
+                    <b>${TranslatedName}</b>: ${Landmark.distance.toFixed(2)} ${MetricUnit}
                     <button onclick="Map.flyTo([${Landmark.lat}, ${Landmark.lon}], 15)">${GoText}</button>`;
                 ResultsContainer.appendChild(Div);
 
-                const LandmarkContinent = GetTranslation("Continent-" + Landmark.continent);
+                const LandmarkContinent = Landmark.continent;
 
                 L.marker([Landmark.lat, Landmark.lon]).addTo(Map)
                 .bindPopup(`
@@ -267,7 +267,7 @@ document.addEventListener("DOMContentLoaded", async function()
     {
         if (!navigator.geolocation)
         {
-            alert("Geolocalizacion no soportada por el navegador");
+            alert("Geolocalization not suported in current browser");
             return;
         }
 
@@ -289,8 +289,8 @@ document.addEventListener("DOMContentLoaded", async function()
             CalculateDistance(Lat, Lon);
         },
         (error) => {
-            console.error("Error obteniendo ubicación:", error);
-            alert("No se pudo obtener tu ubicación. Revisa los permisos de tu navegador.");
+            console.error("Error while getting location:", error);
+            alert("Location details cannot be fetched, check browser permissions.");
         });
     });
 

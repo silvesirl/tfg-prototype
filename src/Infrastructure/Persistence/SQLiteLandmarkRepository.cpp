@@ -46,7 +46,7 @@ std::vector<Landmark> SQLiteLandmarkRepository::GetFilteredLandmarks(std::string
         return {};
     }
 
-    int Index = 1;
+    uint32_t Index = 1;
 
     if(AddContinentFilter)
     {

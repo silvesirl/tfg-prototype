@@ -8,13 +8,9 @@
 #include "LandmarkService.h"
 #include "LandmarkController.h"
 #include "DomainConstants.h"
+#include "DistanceMetricManager.h"
 #include "Localization/LocalizationManager.h"
-
 #include "Mappers/LandmarkFilterContinentMapper.h"
-
-#include "HaversineKilometerAlgorithm.h"
-#include "HaversineMilesAlgorithm.h"
-#include "HaversineFeetAlgorithm.h"
 
 using JsonParser = nlohmann::json;
 
@@ -48,21 +44,23 @@ void LandmarkController::RegisterRoutes()
 
         Logger::Log(Logger::WarningLevel::INFO, std::format("Request received: lat {} lon {}", Lat, Lon));
 
-        auto Landmarks = Service->GetProcessedLandmarks();
+        std::vector<Landmark> Landmarks = Service->GetProcessedLandmarks();
 
         JsonParser ResponseList = JsonParser::array();
 
         for(const auto& CurrentLandmark : Landmarks)
         {
-            auto Distance = Service->CalculateHaversine(CurrentPosition, CurrentLandmark);
+            uint32_t Distance = Service->CalculateDistance(CurrentPosition, CurrentLandmark);
+            std::string TranslatedName = LocalizationManager::GetTranslation(std::string(CurrentLandmark.Name));
+            std::string TranslatedContinent = LocalizationManager::GetTranslation("Continent-" + std::string(LandmarkFilterContinentMapper::MapContinentToString(CurrentLandmark.Continent)));
 
             JsonParser LandMarkObject;
-            LandMarkObject["name"] = CurrentLandmark.Name;
+            LandMarkObject["name"] = TranslatedName;
             LandMarkObject["distance"] = Distance;
             LandMarkObject["lat"] = CurrentLandmark.Lat;
             LandMarkObject["lon"] = CurrentLandmark.Lon;
             LandMarkObject["type"] = CurrentLandmark.Type;
-            LandMarkObject["continent"] = LocalizationManager::GetTranslation(std::string(LandmarkFilterContinentMapper::MapContinentToString(CurrentLandmark.Continent)));
+            LandMarkObject["continent"] = TranslatedContinent;
             LandMarkObject["imageurl"] = CurrentLandmark.Image;
             LandMarkObject["maplink"] = CurrentLandmark.MapsLink;
 
@@ -106,45 +104,39 @@ void LandmarkController::RegisterRoutes()
 
     Server.Post("/changekm", [this](const httplib::Request& Request, httplib::Response& Response)
     {
-        bool Return;
-
         nlohmann::json JsonResponse;
 
         JsonResponse["metric"] = "Kilometers";
         
-        Logger::Log(Logger::WarningLevel::INFO, "Distance metric changed to " + JsonResponse["metric"]);
+        Logger::Log(Logger::WarningLevel::INFO, "Distance metric changed to Kilometers");
 
-        Service->SetHaversineStrategy(std::make_unique<HaversineKilometerAlgorithm>());
+        Service->SetMetricDistance(JsonResponse["metric"]);
 
         Response.set_content(JsonResponse.dump(), "application/json");
     });
 
     Server.Post("/changemiles", [this](const httplib::Request& Request, httplib::Response& Response)
     {
-        bool Return;
-
         nlohmann::json JsonResponse;
 
         JsonResponse["metric"] = "Miles";
 
-        Logger::Log(Logger::WarningLevel::INFO, "Distance metric changed to " + JsonResponse["metric"]);
+        Logger::Log(Logger::WarningLevel::INFO, "Distance metric changed to miles");
 
-        Service->SetHaversineStrategy(std::make_unique<HaversineMilesAlgorithm>());
+        Service->SetMetricDistance(JsonResponse["metric"]);
 
         Response.set_content(JsonResponse.dump(), "application/json");
     });
 
     Server.Post("/changefoot", [this](const httplib::Request& Request, httplib::Response& Response)
     {
-        bool Return;
-
         nlohmann::json JsonResponse;
 
         JsonResponse["metric"] = "Feet";
 
-        Logger::Log(Logger::WarningLevel::INFO, "Distance metric changed to " + JsonResponse["metric"]);
+        Logger::Log(Logger::WarningLevel::INFO, "Distance metric changed to feet");
 
-        Service->SetHaversineStrategy(std::make_unique<HaversineFeetAlgorithm>());
+        Service->SetMetricDistance(JsonResponse["metric"]);
 
         Response.set_content(JsonResponse.dump(), "application/json");
     });

@@ -1,14 +1,12 @@
 #pragma once
-
 #include <vector>
 #include <memory>
 #include <string>
+#include <iostream>
+
 #include "Landmark.h"
 #include "ILandmarkDBRepository.h"
-#include "IHaversineAlgorithmStrategy.h"
-#include "HaversineKilometerAlgorithm.h"
-#include "HaversineMilesAlgorithm.h"
-#include "HaversineFeetAlgorithm.h"
+#include "DistanceMetricManager.h"
 #include "DomainConstants.h"
 
 class LandmarkService
@@ -16,9 +14,10 @@ class LandmarkService
 public:
     /**
     * @brief class LandmarkService.
-    * @param Repo implementation of the chosen repository.
+    * @param aRepo implementation of the chosen repository.
+    * @param aMetricManager implementation of the metric manager.
     */
-    LandmarkService(ILandmarkDBRepository& Repo);
+    LandmarkService(ILandmarkDBRepository& aRepo, std::shared_ptr<DistanceMetricManager> aMetricManager);
 
     /**
     * @brief Calculate the distance between two given landmarks.
@@ -26,7 +25,7 @@ public:
     * @param aLocation2 point of destiny.
     * @return Calculated distance between the points.
     */
-    double CalculateHaversine(Landmark aLocation1, Landmark aLocation2);
+    double CalculateDistance(Landmark aLocation1, Landmark aLocation2);
 
     /**
     * @brief Getter of the landmarks taking into account the selected filters
@@ -47,14 +46,14 @@ public:
     void SetFilteredType(std::string aFilteredType);
 
     /**
-    * @brief sets the desired strategy to follow with the haversine algorithm.
-    * @param aStrategy strategy to follow when calculating distances.
+    * @brief sets the desired distance metric into the manager.
+    * @param aDistanceMetricString text of the desired distance metric.
     */
-    void SetHaversineStrategy(std::unique_ptr<IHaversineAlgorithmStrategy> aStrategy);
+    void SetMetricDistance(std::string aDistanceMetricString);
 
 private:
-    std::unique_ptr<IHaversineAlgorithmStrategy> HaversineStrategy;                     //!<haversinestrategy chosen.
     ILandmarkDBRepository& Repository;                                                  //!<repository to access the landmarks.
+    std::shared_ptr<DistanceMetricManager> MetricManager;                               //!<Manager for the haversine algoritms and distance metrics.
     std::string FilteredContinent = std::string{DomainConstants::EMPTY_FILTER};         //!<filter in place for continent.
     std::string FilteredType = std::string{DomainConstants::EMPTY_FILTER};              //!<filter in place for types.
 };

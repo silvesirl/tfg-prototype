@@ -3,20 +3,17 @@
 #include <algorithm>
 
 #include "LandmarkService.h"
+#include "DistanceMetricManager.h"
+#include "Mappers/DistanceMetricMapper.h"
 
-LandmarkService::LandmarkService(ILandmarkDBRepository& Repo) : Repository(Repo)
+LandmarkService::LandmarkService(ILandmarkDBRepository& aRepo, std::shared_ptr<DistanceMetricManager> aMetricManager)
+    : Repository(aRepo), MetricManager(aMetricManager)
 {
-    SetHaversineStrategy(std::make_unique<HaversineKilometerAlgorithm>());
 }
 
-void LandmarkService::SetHaversineStrategy(std::unique_ptr<IHaversineAlgorithmStrategy> aStrategy)
+double LandmarkService::CalculateDistance(Landmark aLocation1, Landmark aLocation2)
 {
-    this->HaversineStrategy = std::move(aStrategy);
-}
-
-double LandmarkService::CalculateHaversine(Landmark aLocation1, Landmark aLocation2)
-{
-    return this->HaversineStrategy->CalculateDistance(aLocation1, aLocation2);
+    return this->MetricManager->CalculateDistance(aLocation1, aLocation2);
 }
 
 std::vector<Landmark> LandmarkService::GetProcessedLandmarks() 
@@ -32,4 +29,9 @@ void LandmarkService::SetFilteredType(std::string aFilteredType)
 void LandmarkService::SetFilteredContinent(std::string aFilteredContinent)
 {
     FilteredContinent = aFilteredContinent;
+}
+
+void LandmarkService::SetMetricDistance(std::string aDistanceMetricString)
+{
+    this->MetricManager->SetDistanceMetric(DistanceMetricMapper::MapStringToDistanceMetric(aDistanceMetricString));
 }

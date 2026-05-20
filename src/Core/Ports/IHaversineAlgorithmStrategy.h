@@ -1,5 +1,6 @@
 #pragma once
 #include "Landmark.h"
+#include <cmath>
 #include <numbers>
 
 class IHaversineAlgorithmStrategy
