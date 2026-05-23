@@ -12,15 +12,16 @@ extern "C"
 class SQLiteLandmarkRepository : public ILandmarkDBRepository
 {
 public:
-    SQLiteLandmarkRepository();
+    SQLiteLandmarkRepository() = default;
 
     /**
     * @copydoc ILandmarkDBRepository::GetFilteredLandmarks
     */
-    virtual std::vector<Landmark> GetFilteredLandmarks(std::string aLandmarkContinent, std::string aLandmarkType) override;
+    virtual std::vector<Landmark> GetFilteredLandmarks(std::string_view aLandmarkContinent, std::string_view aLandmarkType) override;
 
 private:
-    const char* DB_STRUCTURE =  "SELECT name, latitude, longitude, type, continent, imageurl, mapsurl FROM landmarks WHERE 1=1";
-    const char* DB_CONTINENT =  " AND continent = ?";
-    const char* DB_TYPE =       " AND type = ?";
+    constexpr static const char* DB_STRUCTURE =     "SELECT name, latitude, longitude, type, continent, imageurl, mapsurl FROM landmarks WHERE 1=1";
+    constexpr static const char* DB_CONTINENT =     " AND continent = ?";
+    constexpr static const char* DB_TYPE =          " AND type = ?";
+    constexpr static const char* DB_PATH =          "DB/landmark.db";
 };

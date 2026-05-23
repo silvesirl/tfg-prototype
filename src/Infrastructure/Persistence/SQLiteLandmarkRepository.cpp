@@ -7,17 +7,15 @@
 #include "Mappers/LandmarkFilterTypeMapper.h"
 #include "Mappers/LandmarkFilterContinentMapper.h"
 
-SQLiteLandmarkRepository::SQLiteLandmarkRepository() 
+static std::string SQLiteColumnToString(sqlite3_stmt* aStatement, int aColumn)
 {
+    const auto* Value = reinterpret_cast<const char*>(sqlite3_column_text(aStatement, aColumn));
+    return Value ? std::string(Value) : std::string();
 }
 
-std::vector<Landmark> SQLiteLandmarkRepository::GetFilteredLandmarks(std::string aLandmarkContinent, std::string aLandmarkType)
+std::vector<Landmark> SQLiteLandmarkRepository::GetFilteredLandmarks(std::string_view aLandmarkContinent, std::string_view aLandmarkType)
 {
-    sqlite3* DB = nullptr;
-    sqlite3_stmt* Statement = nullptr;
-    std::vector<Landmark> ReturnValue;
     std::string DBQuery = DB_STRUCTURE;
-
     bool AddContinentFilter = false;
     bool AddTypeFilter = false;
 
@@ -32,51 +30,54 @@ std::vector<Landmark> SQLiteLandmarkRepository::GetFilteredLandmarks(std::string
         AddTypeFilter = true;
     }
 
-    if (sqlite3_open("DB/landmark.db", &DB) != SQLITE_OK) 
+    sqlite3* RawDB = nullptr;
+    if (sqlite3_open("DB/landmark.DB", &RawDB) != SQLITE_OK) 
     {
-        std::cerr << "Error: cannot open the database: " 
-                  << sqlite3_errmsg(DB) << std::endl;
-        return {};
+        std::string ErrorMessage = RawDB ? sqlite3_errmsg(RawDB) : "Unknown error";
+        if (RawDB) sqlite3_close(RawDB);
+        throw std::runtime_error(std::format("Infrastructure Error: Cannot open database: {}", ErrorMessage));
     }
 
-    if (sqlite3_prepare_v2(DB, DBQuery.c_str(), -1, &Statement, nullptr) != SQLITE_OK) 
+    std::unique_ptr<sqlite3, decltype(&sqlite3_close)> DB(RawDB, sqlite3_close);
+
+    sqlite3_stmt* RawStatement = nullptr;
+    if (sqlite3_prepare_v2(DB.get(), DBQuery.c_str(), -1, &RawStatement, nullptr) != SQLITE_OK) 
     {
-        std::cerr << "Error SQL query: " << sqlite3_errmsg(DB) << std::endl;
-        sqlite3_close(DB);
-        return {};
+        throw std::runtime_error(std::format("Infrastructure Error: SQL Query preparation failed: {}", sqlite3_errmsg(DB.get())));
     }
 
-    uint32_t Index = 1;
+    std::unique_ptr<sqlite3_stmt, decltype(&sqlite3_finalize)> Statement(RawStatement, sqlite3_finalize);
 
-    if(AddContinentFilter)
+    int Index = 1;
+    if (AddContinentFilter)
     {
-        sqlite3_bind_text(Statement, Index++, aLandmarkContinent.c_str(), -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(Statement.get(), Index++, std::string(aLandmarkContinent).c_str(), -1, SQLITE_TRANSIENT);
     }
-    if(AddTypeFilter)
+    if (AddTypeFilter)
     {
-        sqlite3_bind_text(Statement, Index++, aLandmarkType.c_str(), -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(Statement.get(), Index++, std::string(aLandmarkType).c_str(), -1, SQLITE_TRANSIENT);
     }
 
-    while (sqlite3_step(Statement) == SQLITE_ROW) 
+    std::vector<Landmark> ReturnValue;
+
+    while (sqlite3_step(Statement.get()) == SQLITE_ROW) 
     {
-        std::string Name = reinterpret_cast<const char*>(sqlite3_column_text(Statement, 0));
-        double Latitude                                 = sqlite3_column_double(Statement, 1);
-        double Longitude                                = sqlite3_column_double(Statement, 2);
+        std::string Name = SQLiteColumnToString(Statement.get(), 0);
+        double Latitude  = sqlite3_column_double(Statement.get(), 1);
+        double Longitude = sqlite3_column_double(Statement.get(), 2);
         
-        std::string TypeStr = reinterpret_cast<const char*>(sqlite3_column_text(Statement, 3));
-        LandmarkType Type = LandmarkFilterTypeMapper::MapStringToType(TypeStr);
+        std::string TypeStr = SQLiteColumnToString(Statement.get(), 3);
+        LandmarkType Type   = LandmarkFilterTypeMapper::MapStringToType(TypeStr);
 
-        std::string ContinentStr = reinterpret_cast<const char*>(sqlite3_column_text(Statement, 4));
-        LandmarkContinent Continent = LandmarkFilterContinentMapper::MapStringToType(ContinentStr);
+        std::string ContinentStr = SQLiteColumnToString(Statement.get(), 4);
+
+        LandmarkContinent Continent = LandmarkFilterContinentMapper::MapStringToContinent(ContinentStr);
         
-        std::string ImageUrl  = reinterpret_cast<const char*>(sqlite3_column_text(Statement, 5));
-        std::string GMapsLink = reinterpret_cast<const char*>(sqlite3_column_text(Statement, 6));
+        std::string ImageUrl  = SQLiteColumnToString(Statement.get(), 5);
+        std::string GMapsLink = SQLiteColumnToString(Statement.get(), 6);
 
-        ReturnValue.emplace_back(Name, Latitude, Longitude, Type, Continent, ImageUrl, GMapsLink);
+        ReturnValue.emplace_back(std::move(Name), Latitude, Longitude, Type, Continent, std::move(ImageUrl), std::move(GMapsLink));
     }
-
-    sqlite3_finalize(Statement);
-    sqlite3_close(DB);
 
     return ReturnValue;
 }

@@ -1,17 +1,11 @@
-#include <cmath>
-#include <numbers>
-#include <algorithm>
-
 #include "LandmarkService.h"
-#include "DistanceMetricManager.h"
-#include "Mappers/DistanceMetricMapper.h"
 
 LandmarkService::LandmarkService(ILandmarkDBRepository& aRepo, std::shared_ptr<DistanceMetricManager> aMetricManager)
     : Repository(aRepo), MetricManager(aMetricManager)
 {
 }
 
-double LandmarkService::CalculateDistance(Landmark aLocation1, Landmark aLocation2)
+double LandmarkService::CalculateDistance(const Landmark& aLocation1, const Landmark& aLocation2)
 {
     return this->MetricManager->CalculateDistance(aLocation1, aLocation2);
 }
@@ -21,17 +15,17 @@ std::vector<Landmark> LandmarkService::GetProcessedLandmarks()
     return Repository.GetFilteredLandmarks(FilteredContinent, FilteredType);
 }
 
-void LandmarkService::SetFilteredType(std::string aFilteredType)
+void LandmarkService::SetFilteredType(std::string_view aFilteredType)
 {
     FilteredType = aFilteredType;
 }
 
-void LandmarkService::SetFilteredContinent(std::string aFilteredContinent)
+void LandmarkService::SetFilteredContinent(std::string_view aFilteredContinent)
 {
     FilteredContinent = aFilteredContinent;
 }
 
-void LandmarkService::SetMetricDistance(std::string aDistanceMetricString)
+void LandmarkService::SetMetricDistance(DistanceMetric aDistanceMetric)
 {
-    this->MetricManager->SetDistanceMetric(DistanceMetricMapper::MapStringToDistanceMetric(aDistanceMetricString));
+    this->MetricManager->SetDistanceMetric(aDistanceMetric);
 }

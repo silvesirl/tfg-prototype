@@ -25,7 +25,7 @@ public:
     * @param aLocation2 point of destiny.
     * @return Calculated distance between the points.
     */
-    double CalculateDistance(Landmark aLocation1, Landmark aLocation2);
+    double CalculateDistance(const Landmark& aLocation1, const Landmark& aLocation2);
 
     /**
     * @brief Getter of the landmarks taking into account the selected filters
@@ -37,19 +37,19 @@ public:
     * @brief sets the filter for the continent.
     * @param aFilteredContinent continet to filter.
     */
-    void SetFilteredContinent(std::string aFilteredContinent);
+    void SetFilteredContinent(std::string_view aFilteredContinent);
 
     /**
     * @brief sets the filter for the type.
     * @param aFilteredType type to filter.
     */
-    void SetFilteredType(std::string aFilteredType);
+    void SetFilteredType(std::string_view aFilteredType);
 
     /**
     * @brief sets the desired distance metric into the manager.
-    * @param aDistanceMetricString text of the desired distance metric.
+    * @param aDistanceMetric enum of the desired distance metric.
     */
-    void SetMetricDistance(std::string aDistanceMetricString);
+    void SetMetricDistance(DistanceMetric aDistanceMetric);
 
 private:
     ILandmarkDBRepository& Repository;                                                  //!<repository to access the landmarks.

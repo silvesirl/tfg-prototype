@@ -6,7 +6,3 @@ target_sources(persistence_mappers INTERFACE
     LandmarkFilterContinentMapper.h
     DistanceMetricMapper.h
 )
-
-target_sources(infrastructure_lib PRIVATE
-    LanguageMapper.cpp
-)

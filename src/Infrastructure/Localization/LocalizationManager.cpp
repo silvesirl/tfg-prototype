@@ -7,15 +7,15 @@
 
 pugi::xml_document LocalizationManager::Doc; 
 bool LocalizationManager::IsInitialized = false;
-Language LocalizationManager::CurrentLanguage = Language::EN;
+thread_local Language LocalizationManager::CurrentLanguage = Language::EN;
 
-bool LocalizationManager::Initialize(const std::string& aFilePath)
+bool LocalizationManager::Initialize(const std::string_view aFilePath)
 {
-    pugi::xml_parse_result Result = Doc.load_file(aFilePath.c_str());
+    pugi::xml_parse_result Result = Doc.load_file(std::string(aFilePath).c_str());
 
     if (!Result)
     {
-        Logger::Log(Logger::WarningLevel::WARNING, "path " + aFilePath + " cound not be opened, the translations will not work");
+        Logger::Log(Logger::WarningLevel::WARNING, "path " + std::string(aFilePath) + " cound not be opened, the translations will not work");
         
         Logger::Log(Logger::WarningLevel::WARNING, "XML Error: " + std::string(Result.description()));
         
@@ -29,15 +29,15 @@ bool LocalizationManager::Initialize(const std::string& aFilePath)
     return IsInitialized;
 }
 
-std::string LocalizationManager::GetTranslation(std::string aLabel)
+std::string LocalizationManager::GetTranslation(std::string_view aLabel)
 {
     if (!IsInitialized || Doc.empty())
     {
         Logger::Log(Logger::WarningLevel::WARNING, "translations not working, check the path or the xml formatting");
-        return aLabel;
+        return std::string(aLabel);
     }
 
-    pugi::xml_node LabelNode = Doc.child("localization").find_child_by_attribute("label", "id", aLabel.c_str());
+    pugi::xml_node LabelNode = Doc.child("localization").find_child_by_attribute("label", "id", std::string(aLabel).c_str());
 
     if (LabelNode)
     {
@@ -47,23 +47,22 @@ std::string LocalizationManager::GetTranslation(std::string aLabel)
 
         if (TranslationNode)
         {
-            std::string ReturnTranslation = TranslationNode.text().as_string(aLabel.c_str());
-            return ReturnTranslation;
+            return TranslationNode.text().as_string(std::string(aLabel).c_str());
         }
         else
         {
-            Logger::Log(Logger::WarningLevel::WARNING, "Language node <" + LanguageString + "> not found for label " + aLabel);
+            Logger::Log(Logger::WarningLevel::WARNING, "Language node <" + LanguageString + "> not found for label " + std::string(aLabel));
         }
     }
     else
     {
-        Logger::Log(Logger::WarningLevel::WARNING, "Label " + aLabel + " not found in the xml, check the label or the languages available");
+        Logger::Log(Logger::WarningLevel::WARNING, "Label " + std::string(aLabel) + " not found in the xml, check the label or the languages available");
     }
 
-    return aLabel;
+    return std::string(aLabel);
 }
 
-void LocalizationManager::SetLanguage(std::string aLanguage)
+void LocalizationManager::SetLanguage(Language aLanguage)
 {
-    CurrentLanguage = LanguageMapper::MapStringToLanguage(aLanguage);
+    CurrentLanguage = aLanguage;
 }

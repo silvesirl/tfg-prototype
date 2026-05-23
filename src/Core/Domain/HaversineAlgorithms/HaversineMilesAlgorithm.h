@@ -7,7 +7,7 @@ protected:
     /**
     * @copydoc IHaversineAlgorithmStrategy::GetEarthRadius
     */
-    virtual double GetEarthRadius() const override
+    virtual double GetEarthRadius() const noexcept override
     {
         return EARTH_RADIUS_MILES;
     };

@@ -1,4 +1,5 @@
 #pragma once
+
 #include <string>
 #include <vector>
 #include "Landmark.h"
@@ -14,8 +15,5 @@ public:
     * @param aLandmarkType Type to filter by. 
     * @return a vector with all the filtered landmarks.
     */
-    virtual std::vector<Landmark> GetFilteredLandmarks(std::string aLandmarkContinent, std::string aLandmarkType) = 0;
-
-protected:
-    const std::string DB_PATH = "DB/landmark.db";
+    virtual std::vector<Landmark> GetFilteredLandmarks(std::string_view aLandmarkContinent, std::string_view aLandmarkType) = 0;
 };

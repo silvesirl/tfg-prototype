@@ -1,7 +1,8 @@
 #pragma once
-#include "Landmark.h"
+
 #include <cmath>
 #include <numbers>
+#include "Landmark.h"
 
 class IHaversineAlgorithmStrategy
 {
@@ -14,7 +15,7 @@ public:
     * @param aMappedLandmark Destination point (the POI to measure).
     * @return The calculated distance in the strategy's specific unit.
     */
-    virtual double CalculateDistance(const Landmark aCurrentLandmark, const Landmark aMappedLandmark) const
+    virtual double CalculateDistance(const Landmark& aCurrentLandmark, const Landmark& aMappedLandmark) const
     {
         double DLat = ToRadians(aMappedLandmark.Lat - aCurrentLandmark.Lat);
         double DLon = ToRadians(aMappedLandmark.Lon - aCurrentLandmark.Lon);
@@ -35,7 +36,7 @@ protected:
     * @brief Gets the earth radius constant, this will be diferent if we are calculating distances in kilometers, miles, feet... 
     * @return Earth radius constant according the selected strategy.
     */
-    virtual double GetEarthRadius() const = 0;
+    virtual double GetEarthRadius() const noexcept = 0;
 
 private:
     /**
@@ -43,7 +44,7 @@ private:
     * @param aDegree to transform.
     * @return transformed degrees into radians.
     */
-    static double ToRadians(double aDegree)
+    [[nodiscard]] static inline constexpr double ToRadians(double aDegree) noexcept
     { 
         return aDegree * (std::numbers::pi / 180.0); 
     };

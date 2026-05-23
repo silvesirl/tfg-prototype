@@ -16,7 +16,7 @@ namespace DistanceMetricMapper
     * @return The corresponding enum.
     * @throws std::invalid_argument If the string does not match any valid metric.
     */
-    static DistanceMetric MapStringToDistanceMetric(std::string_view aDistanceMetricString)
+    inline DistanceMetric MapStringToDistanceMetric(std::string_view aDistanceMetricString)
     {
         if (aDistanceMetricString == KILOMETER_STRING)
         {
@@ -40,7 +40,7 @@ namespace DistanceMetricMapper
     * @return text representing the metric name.
     * @throws std::invalid_argument If the enum value is unknown.
     */
-    static std::string_view MapDistanceMetricToString(DistanceMetric aDistanceMetric)
+    inline std::string_view MapDistanceMetricToString(DistanceMetric aDistanceMetric)
     {
         switch (aDistanceMetric)
         {
