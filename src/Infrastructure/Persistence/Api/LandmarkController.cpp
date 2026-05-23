@@ -12,6 +12,7 @@
 #include "Localization/LocalizationManager.h"
 #include "Mappers/LanguageMapper.h"
 #include "Mappers/DistanceMetricMapper.h"
+#include "Mappers/LandmarkFilterTypeMapper.h"
 #include "Mappers/LandmarkFilterContinentMapper.h"
 
 using JsonParser = nlohmann::json;
@@ -19,6 +20,7 @@ using JsonParser = nlohmann::json;
 LandmarkController::LandmarkController(httplib::Server& s, std::shared_ptr<LandmarkService> svc) 
     : Server(s), Service(svc)
 {
+    Service->Initialize();
 }
 
 void LandmarkController::RegisterRoutes()
@@ -88,7 +90,7 @@ void LandmarkController::RegisterRoutes()
 
             std::string SelectedContinent = RequestData.value("continent", std::string{DomainConstants::EMPTY_FILTER});
             
-            Service->SetFilteredContinent(SelectedContinent);
+            Service->SetFilteredContinent(LandmarkFilterContinentMapper::MapStringToContinent(SelectedContinent));
             
             Logger::Log(Logger::WarningLevel::INFO, "Continent filter updated to: " + SelectedContinent);
 
@@ -112,7 +114,7 @@ void LandmarkController::RegisterRoutes()
 
             std::string SelectedType = RequestData.value("type", std::string{DomainConstants::EMPTY_FILTER});
             
-            Service->SetFilteredType(SelectedType);
+            Service->SetFilteredType(LandmarkFilterTypeMapper::MapStringToType(SelectedType));
 
             Logger::Log(Logger::WarningLevel::INFO, "Type filter updated to: " + SelectedType);
 

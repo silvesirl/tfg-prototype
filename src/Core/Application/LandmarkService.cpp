@@ -5,6 +5,11 @@ LandmarkService::LandmarkService(ILandmarkDBRepository& aRepo, std::shared_ptr<D
 {
 }
 
+void LandmarkService::Initialize()
+{
+    Landmarks = Repository.GetFilteredLandmarks();
+}
+
 double LandmarkService::CalculateDistance(const Landmark& aLocation1, const Landmark& aLocation2)
 {
     return this->MetricManager->CalculateDistance(aLocation1, aLocation2);
@@ -12,17 +17,41 @@ double LandmarkService::CalculateDistance(const Landmark& aLocation1, const Land
 
 std::vector<Landmark> LandmarkService::GetProcessedLandmarks() 
 {
-    return Repository.GetFilteredLandmarks(FilteredContinent, FilteredType);
+    std::vector<Landmark> ReturnLandmarks;
+    ReturnLandmarks.reserve(Landmarks.size());
+
+    for (const auto& CurrentLandmark : Landmarks)
+    {
+        if (FilteredType != LandmarkType::NONE)
+        {
+            if(CurrentLandmark.Type != FilteredType)
+            {
+                continue;
+            }
+        }
+
+        if (FilteredContinent != LandmarkContinent::NONE)
+        {
+            if(CurrentLandmark.Continent != FilteredContinent)
+            {
+                continue;
+            }
+        }
+
+        ReturnLandmarks.push_back(CurrentLandmark);
+    }
+
+    return ReturnLandmarks;
 }
 
-void LandmarkService::SetFilteredType(std::string_view aFilteredType)
+void LandmarkService::SetFilteredContinent(LandmarkContinent aContinentToFilter)
 {
-    FilteredType = aFilteredType;
+    FilteredContinent = aContinentToFilter;
 }
 
-void LandmarkService::SetFilteredContinent(std::string_view aFilteredContinent)
+void LandmarkService::SetFilteredType(LandmarkType aTypeToFilter)
 {
-    FilteredContinent = aFilteredContinent;
+    FilteredType = aTypeToFilter;
 }
 
 void LandmarkService::SetMetricDistance(DistanceMetric aDistanceMetric)

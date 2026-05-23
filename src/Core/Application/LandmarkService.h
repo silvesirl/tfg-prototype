@@ -20,6 +20,11 @@ public:
     LandmarkService(ILandmarkDBRepository& aRepo, std::shared_ptr<DistanceMetricManager> aMetricManager);
 
     /**
+    * @brief Initilizes the repository for getting all the landmarks in the repository.
+    */
+    void Initialize();
+
+    /**
     * @brief Calculate the distance between two given landmarks.
     * @param aLocation1 point of origin.
     * @param aLocation2 point of destiny.
@@ -37,13 +42,13 @@ public:
     * @brief sets the filter for the continent.
     * @param aFilteredContinent continet to filter.
     */
-    void SetFilteredContinent(std::string_view aFilteredContinent);
+    void SetFilteredContinent(LandmarkContinent aContinentToFilter);
 
     /**
     * @brief sets the filter for the type.
     * @param aFilteredType type to filter.
     */
-    void SetFilteredType(std::string_view aFilteredType);
+    void SetFilteredType(LandmarkType aTypeToFilter);
 
     /**
     * @brief sets the desired distance metric into the manager.
@@ -54,6 +59,7 @@ public:
 private:
     ILandmarkDBRepository& Repository;                                                  //!<repository to access the landmarks.
     std::shared_ptr<DistanceMetricManager> MetricManager;                               //!<Manager for the haversine algoritms and distance metrics.
-    std::string FilteredContinent = std::string{DomainConstants::EMPTY_FILTER};         //!<filter in place for continent.
-    std::string FilteredType = std::string{DomainConstants::EMPTY_FILTER};              //!<filter in place for types.
+    LandmarkContinent FilteredContinent = LandmarkContinent::NONE;                      //!<filter in place for continent.
+    LandmarkType FilteredType = LandmarkType::NONE;                                     //!<filter in place for types.
+    std::vector<Landmark> Landmarks;                                                    //!<vector of all the landmarks gotten from the repository.
 };

@@ -271,6 +271,13 @@ document.addEventListener("DOMContentLoaded", async function()
             return;
         }
 
+        const GeolocationOptions = 
+        {
+            enableHighAccuracy: false,
+            timeout: 5000,
+            maximumAge: 60000
+        };
+
         navigator.geolocation.getCurrentPosition((position) => {
             const Lat = position.coords.latitude;
             const Lon = position.coords.longitude;
@@ -291,7 +298,8 @@ document.addEventListener("DOMContentLoaded", async function()
         (error) => {
             console.error("Error while getting location:", error);
             alert("Location details cannot be fetched, check browser permissions.");
-        });
+        },
+        GeolocationOptions);
     });
 
     Map.on("click", async function(e)
