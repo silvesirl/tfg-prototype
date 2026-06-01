@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stdexcept>
+#include <memory>
 #include "DistanceMetricManager.h"
 #include "HaversineKilometerAlgorithm.h"
 #include "HaversineMilesAlgorithm.h"

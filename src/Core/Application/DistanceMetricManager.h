@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include "Landmark.h"
 #include "DistanceMetric.h"
 #include "IHaversineAlgorithmStrategy.h"

@@ -1,6 +1,7 @@
 #include <filesystem>
 #include <iostream>
 #include <string>
+#include <format>
 
 #include "DomainConstants.h"
 #include "SQLiteLandmarkRepository.h"
@@ -18,7 +19,7 @@ std::vector<Landmark> SQLiteLandmarkRepository::GetFilteredLandmarks()
     std::string DBQuery = DB_STRUCTURE; 
 
     sqlite3* RawDB = nullptr;
-    if (sqlite3_open("DB/landmark.DB", &RawDB) != SQLITE_OK) 
+    if (sqlite3_open("DB/landmark.db", &RawDB) != SQLITE_OK) 
     {
         std::string ErrorMessage = RawDB ? sqlite3_errmsg(RawDB) : "Unknown error";
         if (RawDB) sqlite3_close(RawDB);

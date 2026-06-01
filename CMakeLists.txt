@@ -34,6 +34,6 @@ add_custom_command(TARGET geospatial_api POST_BUILD
         "${CMAKE_CURRENT_SOURCE_DIR}/DB"
         "$<TARGET_FILE_DIR:geospatial_api>/DB"
     COMMAND ${CMAKE_COMMAND} -E copy
-        "${CMAKE_CURRENT_SOURCE_DIR}/localization.xml"
-        "$<TARGET_FILE_DIR:geospatial_api>/localization.xml"
+        "${CMAKE_CURRENT_SOURCE_DIR}/Localization.xml"
+        "$<TARGET_FILE_DIR:geospatial_api>/Localization.xml"
 )
